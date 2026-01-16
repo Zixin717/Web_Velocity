@@ -1,0 +1,214 @@
+/*通過ID選擇器設置樣式*/
+/*container 網站頁面*/
+#container{
+    background-color: rgb(255, 255, 255); /*網站底色*/
+    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
+}
+
+/* Banner */
+
+#banner{
+    display: flex;        /*開啟flex*/
+    flex-direction: row;  /*由左到右*/
+    align-items: center;  /*置中*/
+    justify-content: center;/*置中*/
+    margin-top: 1vh;      /*設置上方外邊距 為螢幕的1％*/
+    margin-bottom: 1vh;   /*設置下方外邊距 為螢幕的1％*/
+}
+
+#banner img{
+    margin: 0;  /*拿掉外邊距*/
+    width: 7%;  /*設定寬度 父元素50％*/
+}
+
+
+/*後代選擇器*/
+/*菜單框 樣式*/
+#menu ul{
+    margin: 0% 0%;          /*上下左右邊距各為0*/
+    padding: 0%;            /*拿掉內邊距*/
+
+    display: flex;          /*啟動flex*/
+    justify-content: center;/*讓選項水平置中*/
+    align-items: center;    /*讓選項垂直置中*/
+    gap: 10%;               /*讓選項有間距*/
+    list-style: none;       /*去掉列表的黑點*/
+
+    height: 5vh;            /*菜單高度：螢幕的5%*/
+}
+
+
+/*菜單選項 <a>標籤樣式*/
+#menu li a{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+
+/*菜單選項 <a>標籤加粗樣式*/
+#menu li a:hover{
+    font-weight: bold; /*鼠標放到<a>標籤時會加粗*/
+}
+
+/*首頁排版*/
+#homePage{
+    /*版面設置*/
+    display: flex;       /*使用flex*/
+    flex-direction: row; /*主軸 從左至右*/
+
+    /*圖片設置*/
+    background-image:url('../img/img_2_8.jpg'); /*..是回到上一資料夾的意思，讓css檔退回去抓img的圖。*/
+    background-size: cover;
+    background-position: center;                /*確保圖片在中間*/
+    box-sizing: border-box;                     /*確保padding不會把圖片撐大*/
+
+    /*寬高設置*/
+    width: 100%;    /*寬度佔滿*/
+    height: 90vh;   /*視窗高度80%*/
+}
+
+/*首頁文字排版*/
+#homePageText{
+    /* flex 模式*/
+    display: flex;          /*使用flex*/
+    flex-direction: column; /*由上至下排列*/
+    align-items: center;    /*讓flex框架內的items置中*/
+
+    /* margin 調整邊距 */
+    /* margin: 50% 0% 0% 10%;/*這太邪門了是按照最大父元素推*/
+    margin-top: 38vh;       /*上邊距增加螢幕範圍的20％，往下推視窗高度的20%。*/
+    margin-left: 25vh;      /*左邊距增加螢幕範圍的10％，往右推視窗高度的10%。*/
+
+    /*gap 僅能在flex模式下作用*/
+    gap: 10px;
+    border: 0px solid rgb(255, 4, 54); /*給自己確認範圍用，之後記得註解掉這行。*/
+
+}
+
+/*homePageText後代選擇器*/
+/*首頁的<h1>元素*/
+#homePageText h1{
+    margin: 0;                         /*殺掉外邊距 使用gap隔開即可。*/
+    font-family: 'Changa One', Arial;  /*字體樣式： 1.Google的Changa One 2.預設無襯線字體*/
+    font-size: 3rem;                   /*字體大小*/
+    font-weight: 200;                  /*字體粗細：200*/
+    color: rgb(248, 132, 8);       /*字體顏色：*/
+    
+}
+
+/*首頁的<p>元素*/
+/*之後記得改成.class*/
+#homePageText p{
+    margin: 0;                                      /*殺掉外邊距 使用gap隔開即可。*/
+    font-family: Arial, Helvetica, sans-serif;      /*字體樣式*/
+    letter-spacing: 0px;                            /*調整字距*/ 
+    color: rgb(230, 119, 0);                      /*字體顏色*/
+}
+
+.buy-btn{
+    /*1. 讓<a>變成方塊，這樣才能設寬高。*/
+    display: flex;              /*問題一：為啥用flex就能變成方塊？*/
+    justify-content: center;    /*文字左右置中*/
+    align-items: center;        /*文字垂直置中*/
+    margin-top: 1vh;            /*上方外邊距增加螢幕位置的1％*/
+
+    /*2. 漸層背景核心設定*/
+    /*   放三個顏色：橘 --> 黃 --> 橘 */
+    /*   目的：讓背景自己從左滑到右 */
+    background-image: linear-gradient(45deg, rgb(249, 162, 0), rgb(225, 220, 100), rgb(249, 162, 0));
+    background-size: 200% auto; /*讓背景變成兩倍大，參照元素是<a>標籤自己。*/
+    
+    /*3. 按鈕基礎外觀*/
+    width: 13rem;         /*高度*/
+    height: 5rem;         /*高度*/
+    border-radius: 3rem;  /*圓角*/
+    color: rgb(230, 119, 0);       /*文字顏色*/
+    text-decoration: none;/*去底線*/
+    font-size: 2rem;      /*文字大小*/
+    font-weight: 400;    /*粗體*/
+    
+
+    /*4. 過渡動畫：針對背景位置做動畫*/
+    transition: background-position 0.5s ease, transform 0.2s ease; /*這啥意思 真能運行嗎*/
+
+    /*5. 游標變手手*/
+    cursor: pointer;
+}
+
+/* Hover 效果：移動背景位置 */
+.buy-btn:hover{
+    /*把原本的漸層背景往右推，製造光澤滑過效果。*/
+    background-position: right center;
+
+    /*滑過去時稍微放大*/
+    transform: scale(1.05);
+
+    /*文字顏色按下去時改橘色*/
+    color: rgb(239, 139, 0);
+}
+
+/* Page 2 */
+#page2{
+    background-color: #ffbe08;
+    display: flex;          /*啟動flex*/   
+    flex-direction: column; /*主軸：從上至下*/
+    justify-content: center;/*讓選項水平置中*/
+    align-items: center;    /*讓選項垂直置中*/
+/*    gap: 0.5rem;              /*物件之間的距離。現在不需要，太遠了不好看。*/
+/*    margin-top: 5vh;       /*上邊距增加螢幕範圍的5％，往下推視窗高度的5%。目前不用，推底下物件就好。*/
+
+}
+
+/* Page 2 一起往下推 */
+/* #page2 p, #page2 h1, #page2 img{
+    margin-top: 5vh;
+} */ /*它不奏效，可惡。*/
+
+/* Page 2 <p>文字們 */
+/* #page2 p{
+    margin: 0;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5vh;
+} */
+
+/* Page 2 h1 */
+#page2 h1{
+    margin: 0;              /*外邊距歸零*/
+    text-align: center;     /*文字置中*/
+
+    font-size: 2.5rem;      /*字體大小*/
+    font-family: 'Changa One', Arial;  /*字體樣式： 1.Google的Changa One 2.預設無襯線字體*/
+    font-weight: 200;       /*字體粗細*/
+
+    color: rgb(255, 109, 0);  /*字體顏色*/
+    margin-bottom: 10px;    /*標題下方多點空隙*/
+}
+
+/* Page 2 <p1>樣式 */
+#page2P1{
+    color: rgb(111, 100, 24);
+    margin: 0;          /*外邊距歸零*/
+    text-align: center; /*文字置中*/
+    font-family: Arial, Helvetica, sans-serif; /*字體樣式*/
+    margin-top: 5vh;    /*上邊距增加螢幕範圍的5％，往下推視窗高度的5%。*/
+}
+
+/* Page 2 <p2>樣式 */
+#page2P2{
+    margin: 0;          /*外邊距歸零*/
+    text-align: center; /*文字置中*/
+    font-family: Arial, Helvetica, sans-serif; /*字體樣式*/
+    margin-top: 2vh;             /*上邊距增加螢幕範圍的2％，往下推視窗高度的2%。*/
+    color: rgb(111, 100, 24);  /*文字顏色*/
+
+    /*border:3px solid #51482f;
+    /*border-radius: 20px;*/
+}
+
+/* Page 2 圖片 */
+#page2 img{
+    width: 40%;       /*設定寬度 父元素的50％*/
+    /*max-width: 1900px; 限制最大寬度，但目前不用。*/
+    height: auto;     /*保持圖片比例不變形*/
+    margin-top: 1.5vh; /*上邊距增加螢幕範圍的1.5％，往下推視窗高度的1.5%。*/
+}
