@@ -148,7 +148,7 @@
 
 /* Page 2 */
 #page2{
-    background-color: #ffbe08;
+    background-color: #eaeaea;
     display: flex;          /*啟動flex*/   
     flex-direction: column; /*主軸：從上至下*/
     justify-content: center;/*讓選項水平置中*/
@@ -157,19 +157,6 @@
 /*    margin-top: 5vh;       /*上邊距增加螢幕範圍的5％，往下推視窗高度的5%。目前不用，推底下物件就好。*/
 
 }
-
-/* Page 2 一起往下推 */
-/* #page2 p, #page2 h1, #page2 img{
-    margin-top: 5vh;
-} */ /*它不奏效，可惡。*/
-
-/* Page 2 <p>文字們 */
-/* #page2 p{
-    margin: 0;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    margin-top: 5vh;
-} */
 
 /* Page 2 h1 */
 #page2 h1{
@@ -211,4 +198,101 @@
     /*max-width: 1900px; 限制最大寬度，但目前不用。*/
     height: auto;     /*保持圖片比例不變形*/
     margin-top: 1.5vh; /*上邊距增加螢幕範圍的1.5％，往下推視窗高度的1.5%。*/
+}
+
+/* Page 3 最外層*/
+#page3{
+    display: flex;          /*開啟flex*/
+    flex-direction: column; /*由上到下*/
+    justify-content: center;/*水平線置中 */
+    /*align-items: center;    /*垂直線置中*/
+    padding: 5vh 0% 10vh 0%;       /*上下留白*/
+    overflow: hidden;       /*防止整個網頁被撐爆*/
+    background-color: #ffbe08;
+    font-family: Arial;   /* 字體 */
+
+}
+
+/* Page 3 上半部 標題區*/
+.page3-header{
+    text-align: center;
+    margin-bottom: 30px; /* 跟下面的卡片保持距離 */
+}
+
+/* New Flavor */
+.page3-header h2{
+    margin: 0% 0% 1vh 0%; /* 上 右 下 左 */
+    font-size: 1rem;      /* 字體大小 */
+    color: #ff710b;     /* 顏色 */
+}
+
+/* 標題：開啟味蕾 立即享受*/
+.page3-header h1 {
+    font-size: 2rem;
+    font-weight: 500;
+    margin: 0 0;
+}
+
+/* <p> 人人都能品嚐Velocity的滋味 */
+.page3-header p { 
+    color: #666;
+    margin: 0 0;
+}
+
+/* page3 : slider-container */
+.slider-container{
+    display: flex;       /* 開啟flex */
+    flex-direction: row; /* 由左向右 */
+    gap: 10px;           /* 卡片之間的間距*/
+    justify-content: center; /* 物件在水平線上 移動並置中 */
+    /*align-items: center;   /* 物件在垂直線上置中 */
+}
+
+.card{
+    display: flex;          /* 開啟flex */
+    flex-direction: column; /* 由上到下 */
+    /*align-items: center;    /* 置中 */
+    width: 15%;             /* 寬度佔 slider-container 的 15% */
+    background-color: aliceblue;
+    padding-bottom: 5vh;
+    text-align: left;       /* 文字向左 */
+    text-indent: 1rem;       /*文字縮排*/
+    border-radius: 2%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 淡淡的陰影 */
+}
+
+.card img{
+    width: 100%; /* 寬度佔 card 50% */
+}
+
+.card h3{
+    margin: 0;  /* 外邊距調整 */
+    margin-top: 1vh;
+    font-size: 1rem;        /* 卡片內部字體大小 */
+}
+
+.card p{
+    margin: 0;  /* 外邊距調整*/
+    font-size: 1rem;        /* 卡片內部字體大小 */
+}
+
+
+
+/* Page 4 */
+
+.contact{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10vh;
+    text-align: left;
+}
+
+.contactCard{
+    width: 20%; /* 保持 contact 的 20% 寬度 */
+}
+
+/* CopyRight*/
+.copyright{
+    text-align: center;
 }
