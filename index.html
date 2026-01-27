@@ -29,32 +29,31 @@
 <!--網站主體內容 start-->
 <body>
 
-    <!-- 網站頁面 start -->
-    <div id = "container">
-
-
         <!-- Banner start -->
         <div id="banner">
-            <img src="img/img_0.png"><!-- 單標籤 -->
+                <img src="img/img_0.png"><!-- 單標籤 -->
+
+                <!-- Menu start -->
+                <div id = menu>
+                    <!-- 無序列表 start -->
+                    <ul>
+                        <li><a href="">品牌介紹</a></li>
+                        <li><a href="">新品快訊</a></li>
+                        <li><a href="#page3">熱銷排行</a></li>
+                        <li><a href="">會員登入</a></li>
+                        <li><a href="">尋找據點</a></li>
+                    <!-- 無序列表 end -->
+                    </ul>
+                <!-- Menu end -->
+                </div>
+
         </div>
         <!-- Banner end -->
 
 
-        <!-- Menu start -->
-        <div id = menu>
-            <!-- 無序列表 start -->
-            <ul>
-                <li><a href="">品牌介紹</a></li>
-                <li><a href="">新品快訊</a></li>
-                <li><a href="">熱銷排行</a></li>
-                <li><a href="">會員登入</a></li>
-                <li><a href="">尋找據點</a></li>
-            <!-- 無序列表 end -->
-            </ul>
-        <!-- Menu end -->
-        </div>
+<!-- 網站頁面 start -->
+    <div id = "container">        
         
-
 
         <!-- 首頁 start -->
         <div id = "homePage">
@@ -62,7 +61,7 @@
             <div id="homePageText">
             <h1>Born for Velocity</h1>
             <p>極速修復 為動而生 顛覆你對蛋白粉的想像</p>
-            <a href="#" class="buy-btn">探索風味</a>
+            <a href="#page3" class="buy-btn">探索風味</a>
             <!-- 首頁文案 end -->
             </div>
         <!-- 首頁 end -->
@@ -108,31 +107,33 @@
             <!-- 商品滑塊 start -->
             <div class="slider-container">
                 <div class="card">
-                    <img src="img/img_3_1_2.png" alt="產品1"><!--有點忘記alt的意思-->
+                <a href="Shopping_Page.html" >
+                    <img src="img/img_3_1_3.jpg" alt="產品1"><!--有點忘記alt的意思-->
                     <h3>原味口味</h3><!-- 占一行 還沒殺掉外邊距 -->
                     <p>濃郁新鮮口感</p>
+                </a>
                 </div>
 
                 <div class="card">
-                    <img src="img/img_3_2_2.png" alt="產品2"><!-- img單標籤 -->
+                    <img src="img/img_3_2_3.jpg" alt="產品2"><!-- img單標籤 -->
                     <h3>草莓口味</h3>
                     <p>酸甜初戀滋味</p>
                 </div>
 
                 <div class="card">
-                    <img src="img/img_3_3_2.png" alt="產品3"><!-- img單標籤 -->
+                    <img src="img/img_3_3_3.jpg" alt="產品3"><!-- img單標籤 -->
                     <h3>香草口味</h3>
                     <p>經典不敗選擇</p>
                 </div>
 
                 <div class="card">
-                    <img src="img/img_3_4_2.png" alt="產品4"><!-- img單標籤 -->
+                    <img src="img/img_3_4_3.jpg" alt="產品4"><!-- img單標籤 -->
                     <h3>焦糖咖啡口味</h3>
                     <p>濃郁可可香氣</p>
                 </div>
 
                 <div class="card">
-                    <img src="img/img_3_5_2.png" alt="產品5">
+                    <img src="img/img_3_5_3.jpg" alt="產品5">
                     <h3>抹茶口味</h3>
                     <p>日式清新風味</p>
                 </div>
@@ -156,7 +157,12 @@
                     </div>
 
                     <div class="contactCard">
-                        <p>網站地圖：</p>
+                        <p>網站地圖：</p><br>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1820.3186841180927!2d120.65076721741501!3d24.149370110054306!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34693d9650422ae1%3A0x334dfd5796c49ff6!2z6LOH5bGV5ZyL6ZqbLeWOnyDos4fnrZbmnIMt5pW45L2N5pWZ6IKy56CU56m25omALeS4reWNgA!5e0!3m2!1szh-TW!2stw!4v1769497963698!5m2!1szh-TW!2stw" 
+                        width="100%" height="80%" 
+                        style="border:0;" 
+                        allowfullscreen="" loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
 
                     <div class="contactCard">
@@ -164,10 +170,17 @@
                     </div>
 
                     <div class="contactCard">
-                        <p>？？？？：</p>
+                        <p>聯絡我們：</p><br>
+                        <a href="#" alt="facebook"><img src="img/svg/facebook.svg"></a>
+                        <a href="#" alt="instagram"><img src="img/svg/instagram.svg"></a>
+                        <a href="#" alt="line"><img src="img/svg/line.svg"></a>
+                        <a href="#" alt="youtube"><img src="img/svg/youtube.svg"></a>
                     </div>
-            </div>
+
             <!-- 聯絡方式 end -->
+            </div>
+
+            <hr>
 
             <!-- copyright start -->
             <div class="copyright">

@@ -1,30 +1,43 @@
-/*通過ID選擇器設置樣式*/
-/*container 網站頁面*/
-#container{
-    background-color: rgb(255, 255, 255); /*網站底色*/
-    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
+/* 全域設定 */
+html{
+    scroll-behavior: smooth; /* 讓所有錨點跳轉變成平滑滾動 */
+    scroll-padding-top: 107px; /* 數值 = 導覽列高度 60 + 7 + 40 = 107 */
 }
 
 /* Banner */
-
+/* 為了不要忽大忽小 會寫死這攔的尺寸 */
+/* 60 + 7 + 40 = 107 */
 #banner{
     display: flex;        /*開啟flex*/
-    flex-direction: row;  /*由左到右*/
+    flex-direction: column;  /*由上到下*/
     align-items: center;  /*置中*/
     justify-content: center;/*置中*/
-    margin-top: 1vh;      /*設置上方外邊距 為螢幕的1％*/
-    margin-bottom: 1vh;   /*設置下方外邊距 為螢幕的1％*/
+
+    position: fixed;    /* 讓元素脫離網頁流 固定在最上方 */
+    top: 0;             /* 緊貼視窗最上方*/
+    width: 100%;        /* 因為脫離框架     要重新宣告寬度 */
+    z-index: 999;       /* 最高層級 999    讓它永遠浮在上面*/
+
+    background-color: #ffffff;  /* 要設置背景色不然會變透明 */
+    padding: 7px 0 0px 0;         /* 上 右 下 左 */
+    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
+
 }
 
 #banner img{
-    margin: 0;  /*拿掉外邊距*/
-    width: 7%;  /*設定寬度 父元素50％*/
+    height: 60px;
+    width: auto;
+}
+
+#menu{
+    width: 100%;
 }
 
 
 /*後代選擇器*/
 /*菜單框 樣式*/
 #menu ul{
+
     margin: 0% 0%;          /*上下左右邊距各為0*/
     padding: 0%;            /*拿掉內邊距*/
 
@@ -34,7 +47,8 @@
     gap: 10%;               /*讓選項有間距*/
     list-style: none;       /*去掉列表的黑點*/
 
-    height: 5vh;            /*菜單高度：螢幕的5%*/
+    height: 40px;            /*菜單高度：螢幕的5%*/
+
 }
 
 
@@ -42,28 +56,41 @@
 #menu li a{
     text-decoration: none;
     color: rgb(0, 0, 0);
+    /*transition: all 0.1s ease;*/
 }
 
 /*菜單選項 <a>標籤加粗樣式*/
 #menu li a:hover{
-    font-weight: bold; /*鼠標放到<a>標籤時會加粗*/
+    font-weight: bold; /* 鼠標放到<a>標籤時會加粗 */
 }
+
+
+
+/*通過ID選擇器設置樣式*/
+/*container 網站頁面*/
+#container{
+    background-color: rgb(255, 255, 255); /*網站底色*/
+    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
+}
+
 
 /*首頁排版*/
 #homePage{
     /*版面設置*/
     display: flex;       /*使用flex*/
     flex-direction: row; /*主軸 從左至右*/
+    margin-top: 100px;   /* 調整 margin-top 讓網站banner不吃掉下面的空間 */
+
 
     /*圖片設置*/
     background-image:url('../img/img_2_8.jpg'); /*..是回到上一資料夾的意思，讓css檔退回去抓img的圖。*/
     background-size: cover;
-    background-position: center;                /*確保圖片在中間*/
-    box-sizing: border-box;                     /*確保padding不會把圖片撐大*/
+    background-position: 50% 25%;               /* 離左邊50%遠 離上面25%遠 */
+    box-sizing: border-box;                     /* 確保padding不會把圖片撐大 */
 
     /*寬高設置*/
     width: 100%;    /*寬度佔滿*/
-    height: 90vh;   /*視窗高度80%*/
+    height: 110vh;   /*視窗高度110%*/
 }
 
 /*首頁文字排版*/
@@ -128,7 +155,7 @@
     
 
     /*4. 過渡動畫：針對背景位置做動畫*/
-    transition: background-position 0.5s ease, transform 0.2s ease; /*這啥意思 真能運行嗎*/
+    transition: background-position 0.5s ease, transform 0.2s ease; /* ？真能運行嗎 我也不知道但寫寫看？ */
 
     /*5. 游標變手手*/
     cursor: pointer;
@@ -253,27 +280,52 @@
     flex-direction: column; /* 由上到下 */
     /*align-items: center;    /* 置中 */
     width: 15%;             /* 寬度佔 slider-container 的 15% */
-    background-color: aliceblue;
+    background-color: #ffffff;
     padding-bottom: 5vh;
     text-align: left;       /* 文字向左 */
     text-indent: 1rem;       /*文字縮排*/
     border-radius: 2%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 淡淡的陰影 */
+
+    transition: all 0.3s ease; /* 轉場效果 */
+}
+
+.card a{
+    text-decoration: none;
+    color: #000000;
+}
+
+.card:hover{
+    background-color: #ff990b;
+    color: #ffffff;
+    transform: translateY(-10px); /* 滑鼠游標移到該卡片時，上移 10px */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;    /* 游標變手手 */
+
 }
 
 .card img{
     width: 100%; /* 寬度佔 card 50% */
+    object-fit: cover; /* 裁切圖片確保不變形 */
+    border-radius: 2%; /* 圓角 */
+
 }
+
 
 .card h3{
     margin: 0;  /* 外邊距調整 */
     margin-top: 1vh;
-    font-size: 1rem;        /* 卡片內部字體大小 */
+    font-size: 1.4rem;        /* 卡片內部字體大小 */
 }
 
 .card p{
     margin: 0;  /* 外邊距調整*/
     font-size: 1rem;        /* 卡片內部字體大小 */
+    color: #505050;
+}
+
+.card:hover p{
+    color: #ffffff; /* 點擊時字體變白 */
 }
 
 
@@ -286,10 +338,21 @@
     justify-content: center;
     gap: 10vh;
     text-align: left;
+    margin-bottom: 7vh;
 }
 
 .contactCard{
     width: 20%; /* 保持 contact 的 20% 寬度 */
+}
+
+.contactCard p{
+    margin: 2vh 0 0 0;
+}
+
+/* 社群圖片樣式 */
+.contactCard img{
+    width: 30px;
+    margin: 15px;
 }
 
 /* CopyRight*/
