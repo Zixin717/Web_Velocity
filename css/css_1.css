@@ -66,11 +66,11 @@ html{
 
 
 
-/*通過ID選擇器設置樣式*/
+/*通過 class 選擇器設置樣式*/
 /*container 網站頁面*/
-#container{
+.container{
     background-color: rgb(255, 255, 255); /*網站底色*/
-    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
+    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的0％。*/
 }
 
 
@@ -287,12 +287,9 @@ html{
     border-radius: 2%;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 淡淡的陰影 */
 
-    transition: all 0.3s ease; /* 轉場效果 */
-}
-
-.card a{
     text-decoration: none;
     color: #000000;
+    transition: all 0.3s ease; /* 轉場效果 */
 }
 
 .card:hover{

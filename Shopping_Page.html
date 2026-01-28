@@ -5,51 +5,150 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velocity</title>
 
+    <!-- 跨網域連結 -->
+    <!-- Google font — 思源黑體 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com"> <!-- preconnect 預告訪問該網站-->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <!-- crossorigin 預告跨網域-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet"> <!-- 嵌入字體到樣式裡-->
+
     <!-- css連結 -->
     <link rel="stylesheet" href="css/css_2.css">
 
-    <!-- HTML全域設定 -->
-        <style type="text/css">
-            body{
-                margin: 0%; /*設定<body>的外邊距為0，清除瀏覽器預設值，讓網頁貼齊視窗。*/
-            }
-        </style>
 </head>
 
 
 <!-- 網站主體內容 start -->
 <body>
 
-    <!-- Banner start -->
-        <div id="banner">
-                <img src="img/img_0.png"><!-- 單標籤 -->
+        <!-- Banner start -->
+            <div id="banner">
+                    <img src="img/img_0.png"><!-- 單標籤 -->
 
-                <!-- Menu start -->
-                <div id = menu>
-                    <!-- 無序列表 start -->
-                    <ul>
-                        <li><a href="">品牌介紹</a></li>
-                        <li><a href="">新品快訊</a></li>
-                        <li><a href="#page3">熱銷排行</a></li>
-                        <li><a href="">會員登入</a></li>
-                        <li><a href="">尋找據點</a></li>
-                    <!-- 無序列表 end -->
-                    </ul>
-                <!-- Menu end -->
-                </div>
+                    <!-- Menu start -->
+                    <div id = menu>
+                        <!-- 無序列表 start -->
+                        <ul>
+                            <li><a href="">品牌介紹</a></li>
+                            <li><a href="">新品快訊</a></li>
+                            <li><a href="#page3">熱銷排行</a></li>
+                            <li><a href="">會員登入</a></li>
+                            <li><a href="">尋找據點</a></li>
+                        <!-- 無序列表 end -->
+                        </ul>
+                    <!-- Menu end -->
+                    </div>
 
+            </div>
+            <!-- Banner end -->
+
+
+    <!-- 網站頁面 start -->
+    <div class="container">
+
+        <!-- Page 1 start -->
+        <!-- flex-direction: row;  從左到右 -->
+        <div id="page2P1">
+                    
+            <img src="img/img_3_1_4.jpg" alt="原味口味" id="productPreview">
+    
+            <!-- 介紹與購買 start -->
+            <!-- flex-direction: column; 從上到下 -->
+            <div class="information">
+
+                    <div id="manual">
+                        <h2>Velocity 超能高蛋白粉 2.5kg</h2>
+                        <b>$ 1999</b>
+                        <p>分期 0 利率 低至$666×3期</p>
+                    </div>
+                    
+
+                    <div id="salesVolume">
+                        <p>已售出 3萬+</p>
+                        <img src="img/svg/heart.svg" width="30px">
+                    </div>
+                    
+
+                    <!-- 預計配達時間 start -->
+                    <!-- 記得改 svg 寬度 -->
+                    <div class="tips">
+                        <img src="img/svg/truck.svg">
+                            <div class="shipText">
+                                <p>預計配達時間 <span id="arrival-date">運算中……</span></p>
+                                <p>運費：$0元起</p>
+                                <p>如果訂單未能準時配達，您可以領取 $10 優惠券作為補償。</p>
+                            </div>
+                    </div>
+                    <!-- 預計配達時間 end -->
+
+                    <!-- 放心買 放心退 start -->
+                    <!-- 記得改 svg 寬度 -->
+                    <div class="tips">
+                        <img src="img/svg/shopping_cart_add.svg">
+                        <p class="shipText">健樂放心買 健樂安心退</p>
+                    <!-- 放心買 放心退 end -->
+                    </div>
+                    
+
+                    <!-- 購買按鈕 start -->
+                    <div>
+                        <button type="button" class="buy-btn">直接購買</button><br>
+                        <button type="button" class="buy-btn">加入購物車</button>
+                    <!-- 購買按鈕 end -->
+                    </div>
+                    
+
+
+
+
+
+            <!-- 介紹與購買 end -->
+            </div>
+
+
+            
+        <!-- Page 1 end -->
         </div>
-        <!-- Banner end -->
-
-
-    <div>
 
 
 
 
-
+    <!-- 網站頁面 end -->
     </div>
 
 <!-- 網站主體內容 end -->
 </body>
+
+
+<script type="text/javascript">
+
+
+
+/* 運算函式：計算配送時間 */
+function deliverDate(){
+
+    /* new Date：買個新時鐘回家 取得今天日期 */
+    /* 1. 獲取今天日期 */
+    var today = new Date();
+
+    /* getDate：從買回來的新時鐘那邊 看一下今天日期 */
+    /* 2. 設定預定天數（三天後到貨） */
+    var daysToAdd = 3;
+
+    /* setDate：從買回來的新時鐘那邊 轉動時間 */
+    /* 3. 算出目標日期 */
+    today.setDate(today.getDate()+daysToAdd);
+
+    /* 4. 格式化日期 */
+    var finalDate = today.toLocaleDateString();
+
+    /* 5. 抓到 HTML 的 span 把字塞進去 */
+    document.getElementById('arrival-date').innerText = finalDate;
+}
+
+// 重點：呼叫函數讓它執行
+deliverDate();
+
+
+</script>
+
 </html>

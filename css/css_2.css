@@ -2,6 +2,11 @@
 html{
     scroll-behavior: smooth; /* 讓所有錨點跳轉變成平滑滾動 */
     scroll-padding-top: 107px; /* 數值 = 導覽列高度 60 + 7 + 40 = 107 */
+    font-family: "Noto Sans TC", sans-serif; /* Google 思源黑體 ＆ 預設字體 */
+}
+
+body{
+    margin: 0%; /*設定<body>的外邊距為0，清除瀏覽器預設值，讓網頁貼齊視窗。*/
 }
 
 /* Banner */
@@ -20,7 +25,7 @@ html{
 
     background-color: #ffffff;  /* 要設置背景色不然會變透明 */
     padding: 7px 0 0px 0;         /* 上 右 下 左 */
-    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
+    margin: 0px 0%;               /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
 
 }
 
@@ -62,4 +67,103 @@ html{
 /*菜單選項 <a>標籤加粗樣式*/
 #menu li a:hover{
     font-weight: bold; /* 鼠標放到<a>標籤時會加粗 */
+}
+
+
+/*通過 class 選擇器設置樣式*/
+/*container 網站頁面*/
+.container{
+    background-color: rgb(255, 255, 255); /* 網頁底色 */
+   /* margin: 0; /* （不確定有了） margin-top 後這行還有沒有存在必要，看起來沒有 殺掉瀏覽器外邊距 讓上下左右為父元素 <body> 的0％ */
+    margin-top: 107px; /* 讓瀏覽器上方的外邊距保持 107px 與導覽列隔開 */
+}
+
+/* Page 1 */
+#page2P1{
+    display: flex;           /* 開啟 flex */
+    flex-direction: row;     /* 從左到右 */
+    justify-content: center; /* 置中 */
+    gap: 20px;
+}
+
+#productPreview{
+    height: 80vh;
+}
+
+/* 右邊欄位商品資訊 */
+.information{
+    display: flex; /* 開啟 flex */
+    flex-direction: column; /* 從上到下 */
+    padding: 85px 0 0 40px; /* 記得從 PS 那邊找正確尺寸 */
+    gap: 10px;
+}
+
+
+
+/* 商品介紹說明：標題 價格 分期 */
+/* 標題 */
+#manual h2{
+    margin: 0; /* 殺掉所有外邊距 */
+    margin-bottom: 30px;
+}
+
+/* 價格 */
+#manual b{
+    font-size: 2.5rem;
+    font-weight: 900;
+    /*color: rgb(244, 62, 7);*/
+}
+
+/* 分期 */
+#manual p{
+    margin: 0; /* 殺掉所有外邊距 */
+}
+
+
+
+
+
+/* 銷量與愛心保存 */
+#salesVolume{
+    text-align: right; /* 整個靠右 */
+    margin: 6vh 0 6vh 0;
+}
+
+#salesVolume p{
+    margin: 0; /* 殺掉所有外邊距 */
+}
+
+
+
+
+/* 預計配達時間 ＆ 商業保證 */
+.tips{
+    display: flex;       /* 開啟flex */
+    flex-direction: row; /* 由左至右 */
+    gap: 5px; /* 間距 */
+    align-items: flex-start; /* 垂直靠上 */
+    margin: 10px 0 10px 0;
+    
+}
+
+.tips img{
+    width: 30px; /* 寬度 */
+    height: 30px;/* 高度 */
+    margin: 5px;
+}
+
+/* 預計配達文字 細節追加 */
+.shipText, .shipText p{
+    margin: 0;
+}
+
+
+
+
+/* 按鈕 */
+.buy-btn{
+    width: 100%; /* 父容器 information 的 100％ */
+    height: 5vh;
+    margin: 0 0 10px 0 ;
+    font-size: 1rem;
 }
