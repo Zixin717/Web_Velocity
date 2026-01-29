@@ -48,23 +48,32 @@
         <!-- Page 1 start -->
         <!-- flex-direction: row;  從左到右 -->
         <div id="page2P1">
-                    
-            <img src="img/img_3_1_4.jpg" alt="原味口味" id="productPreview">
+            <div class="productPreview">
+                <div class="product"><img src="img/img_3_1_4.jpg" alt="原味口味"></div>
+                <div class="product"><img src="img/img_3_2_4.jpg" alt="草莓口味"></div>
+                <div class="product"><img src="img/img_3_3_4.jpg" alt="香草口味"></div>
+                <div class="product"><img src="img/img_3_4_4.jpg" alt="焦糖咖啡口味"></div>
+                <div class="product"><img src="img/img_3_5_4.jpg" alt="抹茶口味"></div>
+            </div>
+            
     
             <!-- 介紹與購買 start -->
             <!-- flex-direction: column; 從上到下 -->
             <div class="information">
 
                     <div id="manual">
-                        <h2>Velocity 超能高蛋白粉 2.5kg</h2>
+                        <h1>Velocity 超能高蛋白粉 2.5kg</h1>
                         <b>$ 1999</b>
                         <p>分期 0 利率 低至$666×3期</p>
                     </div>
                     
 
                     <div id="salesVolume">
-                        <p>已售出 3萬+</p>
-                        <img src="img/svg/heart.svg" width="30px">
+                        <p>
+                            <span>已售出</span>
+                            <b>3萬+</b>
+                            <img src="img/svg/heart.svg" width= "20px">
+                        </p>
                     </div>
                     
 
@@ -91,8 +100,8 @@
 
                     <!-- 購買按鈕 start -->
                     <div>
-                        <button type="button" class="buy-btn">直接購買</button><br>
-                        <button type="button" class="buy-btn">加入購物車</button>
+                        <button type="button" id="buy-btn1">直接購買</button><br>
+                        <button type="button" id="buy-btn2">加入購物車</button>
                     <!-- 購買按鈕 end -->
                     </div>
                     

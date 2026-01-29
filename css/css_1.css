@@ -298,7 +298,6 @@ html{
     transform: translateY(-10px); /* 滑鼠游標移到該卡片時，上移 10px */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     cursor: pointer;    /* 游標變手手 */
-
 }
 
 .card img{

@@ -86,7 +86,13 @@ body{
     gap: 20px;
 }
 
+/* 商品預覽 */
 #productPreview{
+    height: 80vh;
+}
+
+/* 商品圖 */
+.product img{
     height: 80vh;
 }
 
@@ -102,7 +108,7 @@ body{
 
 /* 商品介紹說明：標題 價格 分期 */
 /* 標題 */
-#manual h2{
+#manual h1{
     margin: 0; /* 殺掉所有外邊距 */
     margin-bottom: 30px;
 }
@@ -130,8 +136,13 @@ body{
 }
 
 #salesVolume p{
-    margin: 0; /* 殺掉所有外邊距 */
+    margin: 0 0 5px 0; /* 上 右 下 左 */
 }
+
+#salesVolume img{
+    transform: translate(3px, 3px); /* X軸 3px Y軸 3px 往下移動一點 */
+}
+
 
 
 
@@ -161,9 +172,49 @@ body{
 
 
 /* 按鈕 */
-.buy-btn{
+#buy-btn1{
     width: 100%; /* 父容器 information 的 100％ */
-    height: 5vh;
+    height: 5vh; /* 螢幕高度的 5% */
     margin: 0 0 10px 0 ;
-    font-size: 1rem;
+    font-size: 1rem;  /* 文字大小 */
+    background-color: #ea682c;  /* 背景顏色 */
+    border: 0px; /* 邊框殺掉 */
+    color: #ffffff; /*文字顏色*/
 }
+
+/* 滑鼠懸停 */
+#buy-btn1:hover{
+    background-color: #d25a23;  /* 背景顏色 */
+    cursor: pointer; /* 游標變手手 */
+}
+
+
+/* 滑鼠點按 */
+#buy-btn1:active{
+    background-color: #df5206;
+    transform: scale(0.98); /* 縮小 */
+}
+
+#buy-btn2{
+    width: 100%; /* 父容器 information 的 100％ */
+    height: 5vh; /* 螢幕高度的 5% */
+    margin: 0 0 0 0 ; /* 殺掉外邊距 */
+    font-size: 1rem;  /* 文字大小 */
+    background-color: #4CAF50;  /* 背景顏色 */
+    border: 0px; /* 邊框殺掉 */
+    color: #ffffff; /*文字顏色*/
+}
+
+
+/* 滑鼠懸停 */
+#buy-btn2:hover{
+    background-color: #3f9942; /* 背景顏色 */
+    cursor: pointer; /* 游標變手手 */
+}
+
+/* 滑鼠點按 */
+#buy-btn2:active{
+    background-color: #4CAF50; /* 背景顏色 */
+    transform: scale(0.98); /* 縮小 */
+}
+
