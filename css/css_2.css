@@ -86,15 +86,112 @@ body{
     gap: 20px;
 }
 
-/* 商品預覽 */
-#productPreview{
+/* 外包裝 — 定位箭頭用 */
+.carousel-Wrapper{
+    position: relative; /* 相對定位(父親) 讓絕對定位(兒子)的箭頭以 carousel-Wrapper 為基準 */
+    width: 70vh;        /* 跟 productPreview 一樣寬 */
     height: 80vh;
+    margin: 0;     /* 殺掉外邊距 */
 }
 
-/* 商品圖 */
-.product img{
-    height: 80vh;
+
+/* 商品預覽 — 滑動容器 */
+#productPreview{
+    /* 寬高是 carousel-Wrapper 的 100% */
+    width: 100%;
+    height: 100%;
+
+    display: flex; /* 預設從左到右 */
+
+    /* overflow: 溢出 */
+    /* 盒子太大怎麼辦？ */
+    /* hidden       : 切掉不給看　    */
+    /* scroll / auto: 給卷軸讓用戶滑  */
+    overflow-x: auto; /* 卷軸設置 */
+
+    /* scroll-snap: 滾動吸附 */
+    /* mandatory  : 強力磁鐵  */
+    /* mandatory 是強制吸附的意思
+                 一定要吸在某張圖上，不能停在兩張圖中間。
+                 吸附到哪個元素，取決於窗口面積有多大。
+                 除了吸附元素外，還要綁定吸附方式。（用在下面的product上）*/
+    scroll-snap-type: x mandatory; /* x軸向 使用強力磁鐵      */
+    scroll-behavior: smooth;       /* 讓點擊箭頭時的滑動變平滑 */
+
+    /* 隱藏滾動條 (Chrom, Safari) */
+    -webkit-overflow-scrolling: touch; /* 讓手機滑動更順暢 給ios用的 使 iphone 有慣性 */
+    cursor: grab; /* 讓滑鼠變小手手暗示可以抓 */    
 }
+
+/* 隱藏滾動條 (Chrom, Safari, Edge) */
+#productPreview::-webkit-scrollbar{
+    display: none;
+}
+
+/* 隱藏滾動條 (Firefox) */
+#productPreview{
+    scrollbar-width: none;
+}
+
+
+/* 商品卡片 */
+.product{
+    flex: 0 0 100%; /* 讓每個商品寬度占滿 100%，這樣就能精準置中。 */
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+}
+
+/* 商品圖片限制 */
+.product img{
+    height: 100%;    /* 高度跟隨父層 */
+    max-width: 100%; /* 寬度不超過父層 */
+    object-fit: contain; /* 保持圖片比例不要變形 */
+    pointer-events: none;/* 防止瀏覽器以為我要拉圖片本身 */
+}
+
+
+/* 左右箭頭按鈕 */
+.nav-btn{
+    position: absolute;          /* 絕對定位(兒子) -> 意思是它不占空間，會飄起來，定位座標用。 */
+                                 /* 用途是給 nav-btn(箭頭) */
+    top: 50%;                    /* 距離爸爸頂部 50% 如果爸爸沒設 relative，就會認視窗當爹地漂到網頁左上角。 */
+    transform: translateY(-50%); /* 垂直置中 */
+    
+    background: transparent;     /* 透明背景 */
+    border: none;
+
+    color: rgba(0, 0, 0, 0.3);/* 箭頭顏色半透明黑 */
+    font-size: 3rem;            /* 箭頭大小 */
+    cursor: pointer;            /* 滑鼠移上去變手手 */
+
+    z-index: 10;                /* 浮在圖片上 */
+    transition: color 0.3s;
+    user-select: none;          /* 防止一直點選到箭頭文字 */
+}
+
+.nav-btn:hover{
+    color: rgba(0, 0, 0, 0.6);/* 滑鼠移上去變深色 */
+}
+
+.prev-btn{ left: 0; } /* 放左邊 */
+.next-btn{ right: 0;} /* 放右邊 */
+
+
+
+/* 拖曳中的樣式 — 給JS用的 */
+#productPreview.active{
+    cursor: grabbing;       /* 變抓緊的拳頭 */
+    scroll-snap-type: none; /* 拖曳時暫停吸附 增加手感 */
+    scroll-behavior: auto;  /* 拖曳時關閉平滑滾動 才跟得上滑鼠 */
+}
+
+
 
 /* 右邊欄位商品資訊 */
 .information{

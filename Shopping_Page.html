@@ -47,71 +47,83 @@
 
         <!-- Page 1 start -->
         <!-- flex-direction: row;  從左到右 -->
+
         <div id="page2P1">
-            <div class="productPreview">
-                <div class="product"><img src="img/img_3_1_4.jpg" alt="原味口味"></div>
-                <div class="product"><img src="img/img_3_2_4.jpg" alt="草莓口味"></div>
-                <div class="product"><img src="img/img_3_3_4.jpg" alt="香草口味"></div>
-                <div class="product"><img src="img/img_3_4_4.jpg" alt="焦糖咖啡口味"></div>
-                <div class="product"><img src="img/img_3_5_4.jpg" alt="抹茶口味"></div>
-            </div>
-            
-    
-            <!-- 介紹與購買 start -->
-            <!-- flex-direction: column; 從上到下 -->
-            <div class="information">
 
-                    <div id="manual">
-                        <h1>Velocity 超能高蛋白粉 2.5kg</h1>
-                        <b>$ 1999</b>
-                        <p>分期 0 利率 低至$666×3期</p>
-                    </div>
-                    
 
-                    <div id="salesVolume">
-                        <p>
-                            <span>已售出</span>
-                            <b>3萬+</b>
-                            <img src="img/svg/heart.svg" width= "20px">
-                        </p>
-                    </div>
-                    
 
-                    <!-- 預計配達時間 start -->
-                    <!-- 記得改 svg 寬度 -->
-                    <div class="tips">
-                        <img src="img/svg/truck.svg">
-                            <div class="shipText">
-                                <p>預計配達時間 <span id="arrival-date">運算中……</span></p>
-                                <p>運費：$0元起</p>
-                                <p>如果訂單未能準時配達，您可以領取 $10 優惠券作為補償。</p>
-                            </div>
-                    </div>
-                    <!-- 預計配達時間 end -->
+            <!-- 外框箭頭 start -->
+            <div class="carousel-Wrapper">
+                <button class="nav-btn prev-btn">❮</button>
 
-                    <!-- 放心買 放心退 start -->
-                    <!-- 記得改 svg 寬度 -->
-                    <div class="tips">
-                        <img src="img/svg/shopping_cart_add.svg">
-                        <p class="shipText">健樂放心買 健樂安心退</p>
-                    <!-- 放心買 放心退 end -->
-                    </div>
-                    
 
-                    <!-- 購買按鈕 start -->
-                    <div>
-                        <button type="button" id="buy-btn1">直接購買</button><br>
-                        <button type="button" id="buy-btn2">加入購物車</button>
-                    <!-- 購買按鈕 end -->
-                    </div>
-                    
+
+                        <div id="productPreview">
+                            <div class="product"><img src="img/img_3_1_4.jpg" alt="原味口味"></div>
+                            <div class="product"><img src="img/img_3_2_4.jpg" alt="草莓口味"></div>
+                            <div class="product"><img src="img/img_3_3_4.jpg" alt="香草口味"></div>
+                            <div class="product"><img src="img/img_3_4_4.jpg" alt="焦糖咖啡口味"></div>
+                            <div class="product"><img src="img/img_3_5_4.jpg" alt="抹茶口味"></div>
+                        </div>
 
 
 
 
+                <button class="nav-btn next-btn">❯</button>
 
-            <!-- 介紹與購買 end -->
-            </div>
+            <!-- 外框箭頭 end -->
+            </div>            
+                
+                        <!-- 介紹與購買 start -->
+                        <!-- flex-direction: column; 從上到下 -->
+                        <div class="information">
+
+                                <div id="manual">
+                                    <h1>Velocity 超能高蛋白粉 2.5kg</h1>
+                                    <b>$ 1999</b>
+                                    <p>分期 0 利率 低至$666×3期</p>
+                                </div>
+                                
+
+                                <div id="salesVolume">
+                                    <p>
+                                        <span>已售出</span>
+                                        <b>3萬+</b>
+                                        <img src="img/svg/heart.svg" width= "20px">
+                                    </p>
+                                </div>
+                                
+
+                                <!-- 預計配達時間 start -->
+                                <!-- 記得改 svg 寬度 -->
+                                <div class="tips">
+                                    <img src="img/svg/truck.svg">
+                                        <div class="shipText">
+                                            <p>預計配達時間 <span id="arrival-date">運算中……</span></p>
+                                            <p>運費：$0元起</p>
+                                            <p>如果訂單未能準時配達，您可以領取 $10 優惠券作為補償。</p>
+                                        </div>
+                                </div>
+                                <!-- 預計配達時間 end -->
+
+                                <!-- 放心買 放心退 start -->
+                                <!-- 記得改 svg 寬度 -->
+                                <div class="tips">
+                                    <img src="img/svg/shopping_cart_add.svg">
+                                    <p class="shipText">健樂放心買 健樂安心退</p>
+                                <!-- 放心買 放心退 end -->
+                                </div>
+                                
+
+                                <!-- 購買按鈕 start -->
+                                <div>
+                                    <button type="button" id="buy-btn1">直接購買</button><br>
+                                    <button type="button" id="buy-btn2">加入購物車</button>
+                                <!-- 購買按鈕 end -->
+                                </div>
+                                
+                        <!-- 介紹與購買 end -->
+                        </div>
 
 
             
@@ -128,36 +140,6 @@
 </body>
 
 
-<script type="text/javascript">
-
-
-
-/* 運算函式：計算配送時間 */
-function deliverDate(){
-
-    /* new Date：買個新時鐘回家 取得今天日期 */
-    /* 1. 獲取今天日期 */
-    var today = new Date();
-
-    /* getDate：從買回來的新時鐘那邊 看一下今天日期 */
-    /* 2. 設定預定天數（三天後到貨） */
-    var daysToAdd = 3;
-
-    /* setDate：從買回來的新時鐘那邊 轉動時間 */
-    /* 3. 算出目標日期 */
-    today.setDate(today.getDate()+daysToAdd);
-
-    /* 4. 格式化日期 */
-    var finalDate = today.toLocaleDateString();
-
-    /* 5. 抓到 HTML 的 span 把字塞進去 */
-    document.getElementById('arrival-date').innerText = finalDate;
-}
-
-// 重點：呼叫函數讓它執行
-deliverDate();
-
-
-</script>
+<script src="js/js_2.js"></script>
 
 </html>
