@@ -73,7 +73,6 @@ body{
 /*通過 class 選擇器設置樣式*/
 /*container 網站頁面*/
 .container{
-    background-color: rgb(255, 255, 255); /* 網頁底色 */
    /* margin: 0; /* （不確定有了） margin-top 後這行還有沒有存在必要，看起來沒有 殺掉瀏覽器外邊距 讓上下左右為父元素 <body> 的0％ */
     margin-top: 107px; /* 讓瀏覽器上方的外邊距保持 107px 與導覽列隔開 */
 }
@@ -93,6 +92,40 @@ body{
     height: 80vh;
     margin: 0;     /* 殺掉外邊距 */
 }
+
+/* 左邊商品欄位 */
+.sideBar{
+    display: flex;
+    flex-direction: column;
+    width: 15vh;
+    height: 80vh;
+    gap: 6px;
+    justify-content: center;
+    margin-top: 1vh;
+}
+
+.sideBarItem img{
+    max-width: 100%;      /* 寬度不超過父層 */
+    height: 100%;          /* 比照 sideBar 高度 */
+    pointer-events: none; /* 防止瀏覽器以為我要拉圖片 */
+}
+
+/* 滑鼠懸停時的效果 */
+.sideBarItem:hover{
+    cursor: pointer;            /* 滑鼠移上去變手手 */
+}
+
+
+/* 滑鼠點按時的效果 */
+.sideBarItem:active{
+    border: 1px solid;
+    border-color: rgb(110, 110, 110);
+    transform: scale(0.95);
+}
+
+
+
+
 
 
 /* 商品預覽 — 滑動容器 */
@@ -187,7 +220,7 @@ body{
 /* 拖曳中的樣式 — 給JS用的 */
 #productPreview.active{
     cursor: grabbing;       /* 變抓緊的拳頭 */
-    scroll-snap-type: none; /* 拖曳時暫停吸附 增加手感 */
+    scroll-snap-type: none; /* 暫時關閉吸附 -> 拖曳時暫停吸附 增加手感 */
     scroll-behavior: auto;  /* 拖曳時關閉平滑滾動 才跟得上滑鼠 */
 }
 
@@ -314,4 +347,3 @@ body{
     background-color: #4CAF50; /* 背景顏色 */
     transform: scale(0.98); /* 縮小 */
 }
-
