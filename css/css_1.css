@@ -178,19 +178,32 @@ html{
 /* Page 2 */
 #page2{
     background-color: #eaeaea;
+    background-image: url('../img/img_11_2.png'); /*..是回到上一資料夾的意思，讓css檔退回去抓img的圖。*/
     display: flex;          /*啟動flex*/   
-    flex-direction: column; /*主軸：從上至下*/
+    flex-direction: row; /*主軸：從左至右*/
     justify-content: center;/*讓選項水平置中*/
     align-items: center;    /*讓選項垂直置中*/
 /*    gap: 0.5rem;              /*物件之間的距離。現在不需要，太遠了不好看。*/
 /*    margin-top: 5vh;       /*上邊距增加螢幕範圍的5％，往下推視窗高度的5%。目前不用，推底下物件就好。*/
+    height: 80vh;        /*視窗高度100%*/
 
+}
+
+.page2-flex{
+    display: flex;          /*啟動flex*/   
+    flex-direction: column; /*主軸：從上到下*/
+    justify-content: center;/*讓選項水平置中*/
+    /*align-items: center;    /*讓選項垂直置中*/
+    gap: 1.5vh;              /*物件之間的距離。*/
+    height: 100%;        /*視窗高度100%*/
+    width: 50%;         /*寬度50%*/
+    margin-left: 10vh;  /*左邊距5vh*/
 }
 
 /* Page 2 h1 */
 #page2 h1{
     margin: 0;              /*外邊距歸零*/
-    text-align: center;     /*文字置中*/
+   /* text-align: center;     /*文字置中*/
 
     font-size: 2.5rem;      /*字體大小*/
     font-family: 'Changa One', Arial;  /*字體樣式： 1.Google的Changa One 2.預設無襯線字體*/
@@ -200,33 +213,27 @@ html{
     margin-bottom: 10px;    /*標題下方多點空隙*/
 }
 
+
+
 /* Page 2 <p1>樣式 */
 #page2P1{
     color: rgb(111, 100, 24);
-    margin: 0;          /*外邊距歸零*/
-    text-align: center; /*文字置中*/
+    margin: 0 0 0 0vh;          /*外邊距歸零*/
+    text-align: left; /*文字對其左邊*/
     font-family: Arial, Helvetica, sans-serif; /*字體樣式*/
-    margin-top: 5vh;    /*上邊距增加螢幕範圍的5％，往下推視窗高度的5%。*/
+   /* margin-top: 5vh;    /*上邊距增加螢幕範圍的5％，往下推視窗高度的5%。*/
 }
 
-/* Page 2 <p2>樣式 */
-#page2P2{
-    margin: 0;          /*外邊距歸零*/
-    text-align: center; /*文字置中*/
-    font-family: Arial, Helvetica, sans-serif; /*字體樣式*/
-    margin-top: 2vh;             /*上邊距增加螢幕範圍的2％，往下推視窗高度的2%。*/
-    color: rgb(111, 100, 24);  /*文字顏色*/
 
-    /*border:3px solid #51482f;
-    /*border-radius: 20px;*/
-}
 
 /* Page 2 圖片 */
 #page2 img{
-    width: 40%;       /*設定寬度 父元素的50％*/
-    /*max-width: 1900px; 限制最大寬度，但目前不用。*/
+    width: 50%;       /*設定寬度 父元素的100％*/
+    max-width: 1900px; /*限制最大寬度，但目前不用。*/
     height: auto;     /*保持圖片比例不變形*/
-    margin-top: 1.5vh; /*上邊距增加螢幕範圍的1.5％，往下推視窗高度的1.5%。*/
+    margin-top:auto; /*讓圖片頂住底部*/
+    margin-left: 5vh; /*圖片左邊距2vh*/
+    object-fit: cover; /*裁切圖片確保不變形*/
 }
 
 /* Page 3 最外層*/
@@ -329,31 +336,80 @@ html{
 
 
 /* Page 4 */
+#page4 {
+    /* 這裡可以設背景色 */
+    width: 100%;
+    /* 確保 footer 不會貼底太緊 */
+    padding: 2vh 0; 
+}
 
-.contact{
+/* 核心排版區塊：控制左右分開 */
+.contact {
+    display: flex;
+
+    /* 讓左右兩邊撐到最開 */
+    justify-content: space-between; 
+
+    /* 讓左邊的 Logo 和右邊的 icon 垂直置中對齊 */
+    align-items: center; 
+
+    /* 限制最大寬度，避免在大螢幕上分太開，並置中 */
+    max-width: 1200px; 
+    margin: 0 auto; 
+
+    /* 防止手機版貼邊 */
+    padding: 0 5%; 
+}
+
+/* 左邊：Logo 與版權文字 */
+.copyright {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    gap: 10vh;
+    align-items: center; /* 讓 Logo 跟文字垂直置中 */
+    gap: 20px; /* Logo 跟文字的距離 */
+}
+
+/* Logo 大小控制 */
+.copyright img {
+    width: 120px; 
+    height: auto;
+}
+
+.copyright p {
+    font-size: 0.9rem;
+    line-height: 1.5; /* 讓兩行字不要擠在一起 */
     text-align: left;
-    margin-bottom: 7vh;
+    margin: 0; /* 移除多餘邊距 */
 }
 
-.contactCard{
-    width: 20%; /* 保持 contact 的 20% 寬度 */
+/* 右邊：聯絡我們區塊 */
+.contactCard {
+    display: flex;
+    flex-direction: row; /* 讓「聯絡我們」跟 Icon 排成一排 */
+    align-items: center; /* 垂直置中 */
+    gap: 15px;
 }
 
-.contactCard p{
-    margin: 2vh 0 0 0;
+.contactCard p {
+    margin: 0;
+    font-size: 1rem;
+    white-space: nowrap; /* 強制文字不換行 */
 }
 
-/* 社群圖片樣式 */
-.contactCard img{
+/* 社群 Icon 容器 */
+.social-icons {
+    display: flex;
+    gap: 10px; /* Icon 之間的距離 */
+}
+
+.contactCard img {
     width: 30px;
-    margin: 15px;
+    height: 30px;
+    display: block; /* 消除圖片下方的預設空隙 */
+    transition: transform 0.2s; /* 小特效 */
 }
 
-/* CopyRight*/
-.copyright{
-    text-align: center;
+/* 小特效：滑鼠移過去會放大 */
+.contactCard img:hover {
+    transform: scale(1.1);
 }
