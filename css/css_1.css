@@ -2,6 +2,8 @@
 html{
     scroll-behavior: smooth; /* 讓所有錨點跳轉變成平滑滾動 */
     scroll-padding-top: 107px; /* 數值 = 導覽列高度 60 + 7 + 40 = 107 */
+    font-family: "Noto Sans TC", sans-serif; /* Google 思源黑體 ＆ 預設字體 */
+
 }
 
 /* Banner */

@@ -217,13 +217,26 @@ body{
 
 
 
-/* 拖曳中的樣式 — 給JS用的 */
+/* 給JS用的 — 拖曳中的樣式 */
 #productPreview.active{
     cursor: grabbing;       /* 變抓緊的拳頭 */
     scroll-snap-type: none; /* 暫時關閉吸附 -> 拖曳時暫停吸附 增加手感 */
     scroll-behavior: auto;  /* 拖曳時關閉平滑滾動 才跟得上滑鼠 */
 }
 
+/* 給JS用的 — 定義拉伸狀態＆動畫 */
+.pull-left-effect{
+    /* 用 transform 做變形 */
+    /* scaleX(1.05)     -> 代表橫向拉長 5% */
+    /* translateX(20px) -> 代表整塊往右移一點 模擬阻力*/
+    transform: scaleX(1.05) translate(10px);
+
+    /* 變灰濾鏡 */
+    filter: grayscale(10%);
+
+    /* 加上過渡動畫不然會閃爍 */
+    transition: all 0.2s ease;
+}
 
 
 /* 右邊欄位商品資訊 */
@@ -346,4 +359,115 @@ body{
 #buy-btn2:active{
     background-color: #4CAF50; /* 背景顏色 */
     transform: scale(0.98); /* 縮小 */
+}
+
+/* 側邊欄 — 遮罩黑背景 */
+.cart-overlay{
+    position: fixed;      /* 固定在視窗 */
+    top: 0;               /* 距離視窗頂部 0 */
+    left: 0;              /* 距離視窗左側 0 */
+    width: 100%;          /* 寬度 100% */
+    height: 100%;         /* 高度 100% */
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    z-index: 999;         /* 層級在側邊欄下面 */
+
+    /* 預設隱藏 */
+    opacity: 0;          /* 透明度 0 */
+    visibility: hidden;  /* 隱藏 */
+    transition: all 0.3s ease; /* 過渡動畫 */
+}
+
+/* 側邊欄 — 遮罩黑背景 — 事件 */
+.cart-overlay.active{
+    opacity: 1;          /* 透明度 1 */
+    visibility: visible; /* 可見 */
+}
+
+/* 側邊欄 — 購物車 */
+.cart-sidebar{
+    position: fixed;      /* 固定在視窗 */
+
+    /* 貼著右邊 */
+    top: 0;               /* 距離視窗頂部 0 */
+    right: 0;             /* 距離視窗右側 0 */
+
+    width: 400px;         /* 寬度 300px */
+    height: 100%;         /* 高度 100% */
+    background-color: #ffffff;                  /* 白色背景 */
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3); /* 陰影效果 */
+    z-index: 1000;        /* 層級在遮罩上面 */
+
+    /* 動畫 — 預設藏在右邊外面 */
+    transform: translateX(100%);        /* 向右移動自身寬度 */
+    transition: all 0.3s ease-in-out;   /* 過渡動畫 */
+
+    /* 排版 */
+    display: flex;
+    flex-direction: column;
+}
+
+/* 側邊欄 — 購物車 — 事件：加上 active 類別時抽屜滑出來 */
+.cart-sidebar.active{
+    transform: translateX(0); /* 向左移動自身寬度，顯示出來並回到原位。 */
+}
+
+/* 側邊欄 — 購物車 — 裝飾(標題) */
+.cart-header{
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cart-header button{
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 側邊欄 — 購物車 — 裝飾(內容) */
+.cart-body {
+    flex: 1; /* 佔滿中間剩餘空間 */
+    padding: 20px;
+    overflow-y: auto; /* 東西太多可以滾動 */
+}
+
+.cart-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.cart-items img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* 側邊欄 — 購物車 — 裝飾(底下) */
+.cart-footer {
+    border-top: 1px solid #eee;
+    display: flex;
+    flex-direction: row;
+}
+
+.cart-footer-flex{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 2vh;
+}
+
+.checkout{
+    width: 100%;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 1rem;
+    background-color: #248c24;
 }

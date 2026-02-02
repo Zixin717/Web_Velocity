@@ -1,0 +1,37 @@
+{
+  "productName": "Velocity 超能高蛋白粉 2.5kg",
+  "price": 1999,
+  "installment": "分期 0 利率 低至 $666×3 期",
+  "variants": [
+    {
+      "id": "original",
+      "flavor": "原味",
+      "description": "經典原味，乳清蛋白純淨風味",
+      "image": "img/img_3_1_4.jpg"
+    },
+    {
+      "id": "strawberry",
+      "flavor": "草莓",
+      "description": "酸甜草莓，運動後清爽口感",
+      "image": "img/img_3_2_4.jpg"
+    },
+    {
+      "id": "vanilla",
+      "flavor": "香草",
+      "description": "濃郁香草，百搭不膩",
+      "image": "img/img_3_3_4.jpg"
+    },
+    {
+      "id": "caramel_coffee",
+      "flavor": "焦糖咖啡",
+      "description": "焦糖與咖啡雙重風味",
+      "image": "img/img_3_4_4.jpg"
+    },
+    {
+      "id": "matcha",
+      "flavor": "抹茶",
+      "description": "日式抹茶，清新茶香",
+      "image": "img/img_3_5_4.jpg"
+    }
+  ]
+}
