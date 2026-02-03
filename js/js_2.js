@@ -6,9 +6,13 @@
 
 
 document.addEventListener('DOMContentLoaded', ()=>
-    {
+    { /* document.addEventListener — start*/
+
+    /* 會員登入 start */
+    /* 會員登入 end */
 
 
+    /* -- 滑動功能 start -- */
         // 設置 const 常數 名字取為 slider
         // document.getElementById('') -> 文件的 取得元素ID 事件
         // productPreview -> 我裝圖片的可愛框框
@@ -174,10 +178,6 @@ document.addEventListener('DOMContentLoaded', ()=>
         // 滑鼠移動    -> 計算距離 + 滾動；
 
 
-
-
-
-
         // 2. 左右箭頭功能
         const nextBtn = document.querySelector('.next-btn');
         const prevBtn = document.querySelector('.prev-btn');
@@ -204,44 +204,46 @@ document.addEventListener('DOMContentLoaded', ()=>
                         left: -scrollAmount, behavior:'smooth'
                     });
             });
+    /* -- 滑動功能 end -- */
 
 
-        /* 側邊導覽功能 */
-
-    // 1. 抓取所有側邊小圖
-    //    querySelectorAll -> 意思是抓出一組，會變成陣列 [ 圖0, 圖1, 圖2…… ]
-    const sideItems = document.querySelectorAll('.sideBarItem');
 
 
-    // 2. 幫每個小圖裝上監聽器
-    //    forEach -> 像點名那樣把每個按鈕都叫出來綁定功能
-    //    forEach ( (item, index) => {...} )
-    //    item    -> 按鈕本身
-    //    index   -> 它是第幾個
-    sideItems.forEach((item, index)=>
-        {
-            item.addEventListener('click',()=>
-                {
-                    // 算出要滑去哪裡
-                    // 公式：第幾個 * 一張大圖的寬度
-                    // scrollAmount -> 總共滑多少
-                    // clientWidth  -> 看的到的寬度
-                    const scrollAmount = slider.clientWidth;
-                    const targetPos = index*scrollAmount;
+    /* 左側商品小圖 start */
+        // 1. 抓取所有側邊小圖
+        //    querySelectorAll -> 意思是抓出一組，會變成陣列 [ 圖0, 圖1, 圖2…… ]
+        const sideItems = document.querySelectorAll('.sideBarItem');
 
-                    // 命令 slider 滑過去
-                    // left: 0         -> 滾到最左邊。
-                    // left: 500       -> 滾到距離左邊 500px 的地方。
-                    // left: targetPos -> 滾到我們剛剛算出來的「第 N 張圖的位置」。
-                    slider.scrollTo({
-                        left: targetPos,    // 不知道 left 的意思
-                        behavior: 'smooth'  // 平滑滾動
+
+        // 2. 幫每個小圖裝上監聽器
+        //    forEach -> 像點名那樣把每個按鈕都叫出來綁定功能
+        //    forEach ( (item, index) => {...} )
+        //    item    -> 按鈕本身
+        //    index   -> 它是第幾個
+        sideItems.forEach((item, index)=>
+            {
+                item.addEventListener('click',()=>
+                    {
+                        // 算出要滑去哪裡
+                        // 公式：第幾個 * 一張大圖的寬度
+                        // scrollAmount -> 總共滑多少
+                        // clientWidth  -> 看的到的寬度
+                        const scrollAmount = slider.clientWidth;
+                        const targetPos = index*scrollAmount;
+
+                        // 命令 slider 滑過去
+                        // left: 0         -> 滾到最左邊。
+                        // left: 500       -> 滾到距離左邊 500px 的地方。
+                        // left: targetPos -> 滾到我們剛剛算出來的「第 N 張圖的位置」。
+                        slider.scrollTo({
+                            left: targetPos,    // 不知道 left 的意思
+                            behavior: 'smooth'  // 平滑滾動
+                        });
                     });
-                });
-        });
+            });/* 左側商品小圖 end */
 
 
-        /* 側邊購物籃 */
+    /* 右側購物籃 start */
         // 1. 抓元素
         const cartSidebar = document.getElementById('cartSidebar'); // 抽屜
         const cartOverlay = document.getElementById('cartOverlay'); // 黑背景
@@ -256,7 +258,7 @@ document.addEventListener('DOMContentLoaded', ()=>
             {
                 cartSidebar.classList.add('active'); // 抽屜出現
                 cartOverlay.classList.add('active'); // 黑背景出現
-            }
+            };
 
 
         // 3. 事件 — 關閉購物車抽屜
@@ -264,7 +266,7 @@ document.addEventListener('DOMContentLoaded', ()=>
             {
                 cartSidebar.classList.remove('active'); // 抽屜消失
                 cartOverlay.classList.remove('active'); // 黑背景消失
-            }
+            };
 
         // 4. 綁定監聽器
         // 因為 openCartBtns 是一群人，所以我們要用 forEach 一個一個抓出來交代任務
@@ -278,12 +280,134 @@ document.addEventListener('DOMContentLoaded', ()=>
 
         closeCartBtn.addEventListener('click', closeCart); // 關閉按鈕
         cartOverlay.addEventListener('click', closeCart); // 點黑背景也能關閉
+    /* 右側購物籃 end */
+
+    /* 會員登入 start */
+        // 1. 抓元素
+        const loginOverlay = document.getElementById('loginOverlay'); // 會員登入 底下的黑背景
+        const userLogin = document.getElementById('userLogin');       // 會員登入 抽屜
+        const closeLoginBtn = document.getElementById('closeLoginBtn'); // 關閉按鈕X
+    
+        // 用 querySelectorAll 抓取所有穿著 "open-login-btn" 制服的按鈕
+        // 這會變成一個陣列：[按鈕1, 按鈕2, 按鈕3...]
+        const openLoginBtns = document.querySelectorAll('.open-login-btn');
+    
+        // 2. 事件 — 打開會員登入抽屜
+        const openLogin = ()=>
+            {
+                userLogin.classList.add('active');    // 抽屜出現
+                loginOverlay.classList.add('active'); // 黑背景出現
+            };
+
+        // 3. 事件 — 關閉會員登入抽屜
+        const closeLogin = ()=>
+            {
+                userLogin.classList.remove('active');    // 抽屜消失
+                loginOverlay.classList.remove('active'); // 黑背景消失
+            };
+    
+        // 4. 綁定監聽器
+        // 因為 openLoginBtns 是一群人，所以我們要用 forEach 一個一個抓出來交代任務
+        // btn 代表「當下抓到的那一個按鈕」
+        openLoginBtns.forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault(); // 防止亂跳
+                openLogin();       // 執行打開
+            });
+        closeLoginBtn.addEventListener('click', closeLogin); // 關閉按鈕
+        loginOverlay.addEventListener('click', closeLogin); // 點黑背景也能關閉
+        });
+    /* 會員登入 end */
+
+    /* 首頁點擊時移動到對應商品 start */
+        // 1. 抓取所有首頁的商品連結
+        //    讀取網址的 hash 值 ( #0, #1, #2, #3 )
+        const hash = window.location.hash; // 抓網址列的 #0、#1、#2、#3
+
+        // 2. 檢查有沒有 hash 值
+        if (hash) {
+            // 3. 取得數字部分，轉成整數。
+            //    parseInt(字串, 進位制) -> 把字串轉成整數
+            const index = parseInt(hash.replace('#', ''), 10); // 把 #0 變成 0
+
+            // 4. 計算要滾動到哪裡 ＆ 確保它是有效數字( 不是 NaN + 在合理範圍內)
+            if(!isNaN(index)) {
+
+                // 5. 等圖片載入一下再滾動比較安全 -> 用setTimeout 模擬圖片載入時間
+                setTimeout(()=>
+                    {
+                        const scrollAmount = slider.clientWidth; // 一張大圖的寬度
+                        const targetPos = index * scrollAmount;  // 要滾動到哪裡
+
+                        // 6. 執行滾動
+                        slider.scrollTo({
+                            left: targetPos,
+                            behavior: 'smooth'
+                        });
+                    });
+            };        
+        };
+    /* 首頁點擊時移動到對應商品 end */
+
         
-    });
+    });/* document.addEventListener — end*/
 
 
+// /* 表單函式 start */
+// function $(id){  
+//     // 1. 抓 ID 元素
+//     return document.getElementById(id); // 回傳指定 id 的元素
+// }
 
 
+// function validateForm(){
+//     // 獲取用戶名
+//     var username = $('username').value;
+//     // 獲取密碼
+//     var password = $('password').value;
+//     // 檢查用戶名是否為空
+//     if(isEmpty(username)){
+//         // 通過 innerHTML 賦值給提示訊息
+//         $('loginSubmitBtn').innerHTML = '請輸入用戶名';
+//         return;
+//     }
+// }
+
+// // 2. 判斷字符串是否為空
+// // 如果為空返回 true，否則返回 false。
+// function isEmpty(str){
+//     return ( str == null || str.trim().length === 0 )
+// };
+
+
+// // 3. 等 HTML 加載完成後，綁定表單提交事件。
+// document.addEventListener('DOMContentLoaded', ()=>
+//     {
+//         const loginForm = $('loginForm'); // 獲取表單元素
+//         const submitBtn = $('loginSubmitBtn'); // 獲取提交按鈕
+
+//         // 綁定表單提交事件
+//         loginForm.addEventListener('submit', (e) => {
+//             e.preventDefault(); // 防止表單預設提交行為
+//             validateForm();     // 執行驗證函式
+//         });
+//     });
+
+// // 4. 檢查邏輯
+// function validateForm(){
+//     // 獲取用戶名
+//     var username = $('username').value;
+//     // 獲取密碼
+//     var password = $('password').value;
+//     // 檢查用戶名是否為空
+//     if(isEmpty(username)){
+//         // 通過 innerHTML 賦值給提示訊息
+//         submitBtn.innerHTML = '請輸入用戶名';
+//         return;
+//     }
+// }
+
+/* 表單函式 end */
 
 
 
