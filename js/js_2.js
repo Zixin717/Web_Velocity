@@ -1,3 +1,24 @@
+/* 商品口味資料（與 data/products.json 同步；若以 file:// 開啟則使用此 fallback） */
+const PRODUCTS_FALLBACK = {
+    productName: "Velocity 超能高蛋白粉 2.5kg",
+    price: 1999,
+    installment: "分期 0 利率 低至 $666×3 期",
+    variants: [
+        { id: "original", flavor: "原味", description: "經典原味，乳清蛋白純淨風味", image: "img/img_3_1_4.jpg" },
+        { id: "strawberry", flavor: "草莓", description: "酸甜草莓，運動後清爽口感", image: "img/img_3_2_4.jpg" },
+        { id: "vanilla", flavor: "香草", description: "濃郁香草，百搭不膩", image: "img/img_3_3_4.jpg" },
+        { id: "caramel_coffee", flavor: "焦糖咖啡", description: "焦糖與咖啡雙重風味", image: "img/img_3_4_4.jpg" },
+        { id: "matcha", flavor: "抹茶", description: "日式抹茶，清新茶香", image: "img/img_3_5_4.jpg" }
+    ]
+};
+
+let productData = null;
+let cartItems = [];
+
+
+
+
+
 /* 拖曳函式 */
 
 /* document.addEventListener -> 開啟文件的監聽事件 */
@@ -6,7 +27,12 @@
 
 
 document.addEventListener('DOMContentLoaded', ()=>
-    { /* document.addEventListener — start*/
+    { 
+        // 載入商品資料（優先從 data/products.json 讀取）
+        loadProductData();
+        
+        
+    /* document.addEventListener — start*/
 
     /* 會員登入 start */
     /* 會員登入 end */
@@ -244,42 +270,42 @@ document.addEventListener('DOMContentLoaded', ()=>
 
 
     /* 右側購物籃 start */
-        // 1. 抓元素
-        const cartSidebar = document.getElementById('cartSidebar'); // 抽屜
-        const cartOverlay = document.getElementById('cartOverlay'); // 黑背景
-        const closeCartBtn = document.getElementById('closeCartBtn'); // 關閉按鈕X
+        // // 1. 抓元素
+        // const cartSidebar = document.getElementById('cartSidebar'); // 抽屜
+        // const cartOverlay = document.getElementById('cartOverlay'); // 黑背景
+        // const closeCartBtn = document.getElementById('closeCartBtn'); // 關閉按鈕X
 
-        // 用 querySelectorAll 抓取所有穿著 "open-cart-btn" 制服的按鈕
-        // 這會變成一個陣列：[按鈕1, 按鈕2, 按鈕3...]
-        const openCartBtns = document.querySelectorAll('.open-cart-btn');
+        // // 用 querySelectorAll 抓取所有穿著 "open-cart-btn" 制服的按鈕
+        // // 這會變成一個陣列：[按鈕1, 按鈕2, 按鈕3...]
+        // const openCartBtns = document.querySelectorAll('.open-cart-btn');
 
-        // 2. 事件 — 打開購物車抽屜
-        const openCart = ()=>
-            {
-                cartSidebar.classList.add('active'); // 抽屜出現
-                cartOverlay.classList.add('active'); // 黑背景出現
-            };
+        // // 2. 事件 — 打開購物車抽屜
+        // const openCart = ()=>
+        //     {
+        //         cartSidebar.classList.add('active'); // 抽屜出現
+        //         cartOverlay.classList.add('active'); // 黑背景出現
+        //     };
 
 
-        // 3. 事件 — 關閉購物車抽屜
-        const closeCart = ()=>
-            {
-                cartSidebar.classList.remove('active'); // 抽屜消失
-                cartOverlay.classList.remove('active'); // 黑背景消失
-            };
+        // // 3. 事件 — 關閉購物車抽屜
+        // const closeCart = ()=>
+        //     {
+        //         cartSidebar.classList.remove('active'); // 抽屜消失
+        //         cartOverlay.classList.remove('active'); // 黑背景消失
+        //     };
 
-        // 4. 綁定監聽器
-        // 因為 openCartBtns 是一群人，所以我們要用 forEach 一個一個抓出來交代任務
-        // btn 代表「當下抓到的那一個按鈕」
-        openCartBtns.forEach((btn) => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault(); // 防止亂跳
-                openCart();         // 執行打開
-            });
-        });
+        // // 4. 綁定監聽器
+        // // 因為 openCartBtns 是一群人，所以我們要用 forEach 一個一個抓出來交代任務
+        // // btn 代表「當下抓到的那一個按鈕」
+        // openCartBtns.forEach((btn) => {
+        //     btn.addEventListener('click', (e) => {
+        //         e.preventDefault(); // 防止亂跳
+        //         openCart();         // 執行打開
+        //     });
+        // });
 
-        closeCartBtn.addEventListener('click', closeCart); // 關閉按鈕
-        cartOverlay.addEventListener('click', closeCart); // 點黑背景也能關閉
+        // closeCartBtn.addEventListener('click', closeCart); // 關閉按鈕
+        // cartOverlay.addEventListener('click', closeCart); // 點黑背景也能關閉
     /* 右側購物籃 end */
 
     /* 會員登入 start */
@@ -349,8 +375,108 @@ document.addEventListener('DOMContentLoaded', ()=>
         };
     /* 首頁點擊時移動到對應商品 end */
 
+
+    /* 購物車 start */
+    
+            // 3. 同步當前圖片與商品口味／品項：滾動時更新右側資訊
+        function getCurrentSlideIndex() {
+            const w = slider.clientWidth;
+            const scroll = slider.scrollLeft;
+            const index = Math.round(scroll / w);
+            const max = slider.querySelectorAll('.product').length - 1;
+            return Math.min(Math.max(0, index), max);
+        }
+        function updateProductInfo() {
+            if (!productData) return;
+            const index = getCurrentSlideIndex();
+            const v = productData.variants[index];
+            const titleEl = document.getElementById('productTitle');
+            const flavorEl = document.getElementById('productFlavor');
+            const priceEl = document.getElementById('productPrice');
+            const installEl = document.getElementById('productInstallment');
+            if (titleEl) titleEl.textContent = productData.productName;
+            if (flavorEl) flavorEl.textContent = '口味：' + v.flavor + ' · ' + v.description;
+            if (priceEl) priceEl.textContent = '$ ' + productData.price;
+            if (installEl) installEl.textContent = productData.installment;
+        }
+        slider.addEventListener('scroll', updateProductInfo);
+        updateProductInfo();
+
+        // 4. 加入購物車按鈕：打開側邊欄並加入當前品項
+        const buyBtn2 = document.getElementById('buy-btn2');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const cartCloseBtn = document.getElementById('cartCloseBtn');
+        if (buyBtn2) {
+            buyBtn2.addEventListener('click', function() {
+                if (!productData) return;
+                const index = getCurrentSlideIndex();
+                const v = productData.variants[index];
+                cartItems.push({
+                    productName: productData.productName,
+                    flavor: v.flavor,
+                    price: productData.price,
+                    image: v.image
+                });
+                renderCart();
+                cartOverlay.classList.add('is-open');
+                cartSidebar.classList.add('is-open');
+                cartOverlay.setAttribute('aria-hidden', 'false');
+            });
+        }
+        function closeCart() {
+            cartOverlay.classList.remove('is-open');
+            cartSidebar.classList.remove('is-open');
+            cartOverlay.setAttribute('aria-hidden', 'true');
+        }
+        if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
+        if (cartOverlay) cartOverlay.addEventListener('click', closeCart);
+
+        function renderCart() {
+            const list = document.getElementById('cartItemsList');
+            const countEl = document.getElementById('cartCount');
+            const totalEl = document.getElementById('cartTotalPrice');
+            if (!list) return;
+            list.innerHTML = '';
+            let total = 0;
+            cartItems.forEach(function(item) {
+                total += item.price;
+                const li = document.createElement('li');
+                li.className = 'cart-item';
+                li.innerHTML = '<img src="' + item.image + '" alt=""><div class="cart-item-info"><p class="name">' + item.productName + '</p><p class="flavor">' + item.flavor + '</p><p class="price">$ ' + item.price + '</p></div>';
+                list.appendChild(li);
+            });
+            if (countEl) countEl.textContent = cartItems.length;
+            if (totalEl) totalEl.textContent = '$ ' + total;
+        }
+    });
+
+function loadProductData() {
+    function applyProductInfo(data) {
+        productData = data;
+        var slider = document.getElementById('productPreview');
+        var index = 0;
+        if (slider) index = Math.min(Math.max(0, Math.round(slider.scrollLeft / slider.clientWidth)), data.variants.length - 1);
+        var v = data.variants[index];
+        var flavorEl = document.getElementById('productFlavor');
+        var titleEl = document.getElementById('productTitle');
+        var priceEl = document.getElementById('productPrice');
+        var installEl = document.getElementById('productInstallment');
+        if (flavorEl) flavorEl.textContent = '口味：' + v.flavor + ' · ' + v.description;
+        if (titleEl) titleEl.textContent = data.productName;
+        if (priceEl) priceEl.textContent = '$ ' + data.price;
+        if (installEl) installEl.textContent = data.installment;
+    }
+    fetch('data/products.json')
+        .then(function(res) { return res.ok ? res.json() : Promise.reject(); })
+        .then(applyProductInfo)
+        .catch(function() { applyProductInfo(PRODUCTS_FALLBACK); });
+}
+
+    /* 購物車 end */
+
         
-    });/* document.addEventListener — end*/
+;/* document.addEventListener — end*/
 
 
 // /* 表單函式 start */

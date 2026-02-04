@@ -140,47 +140,19 @@
     <div id="cartOverlay" class="cart-overlay"></div>
 
     <!-- 側邊購物籃 start -->
+        <!-- 購物車側邊欄：點擊加入購物車時從右側滑出 -->
+    <div id="cartOverlay" class="cart-overlay"></div>
     <aside id="cartSidebar" class="cart-sidebar">
-        <div class="cart-header">
-            <h2>購物籃</h2>
-            <button id="closeCartBtn" class="close-btn">✕</button>
+        <div class="cart-sidebar-header">
+            <h2>購物車</h2>
+            <button type="button" id="cartCloseBtn" class="cart-close-btn">✕</button>
         </div>
-
-        <div class="cart-body">
-            <div class="cart-items">
-                <!-- 購物車商品項目將動態添加在這裡 -->
-                 <img src="img/img_3_1_4.jpg" alt="原味口味">
-                 <div class="item-info">
-                    <h3>Velocity 超能高蛋白粉 2.5kg 原味口味</h3>
-                    <p>$1999</p>
-                 </div>
-            </div>
-
-            <div class="cart-items">
-                 <img src="img/img_3_2_4.jpg" alt="草莓口味">
-                 <div class="item-info">
-                    <h3>Velocity 超能高蛋白粉 2.5kg 草莓口味</h3>
-                    <p>$1999</p>
-                 </div>
-            </div>
-
-            <div class="cart-footer">
-                <div class="cart-footer-flex">
-                    <div class="total">
-                        <span>總計:</span>
-                        <span>$3,998</span>
-                    </div>
-
-                    <div class="checkout-btn">
-                        <button type="checkout-btn" class="checkout">前往結帳</button>
-                    </div>
-                </div>
-            </div>    
+        <ul id="cartItemsList" class="cart-items-list"></ul>
+        <div class="cart-sidebar-footer">
+            <p class="cart-total">共 <span id="cartCount">0</span> 件 · 總計 <span id="cartTotalPrice">$ 0</span></p>
         </div>
-
-    <!-- 側邊購物籃 end -->
     </aside>
-
+    <!-- 側邊購物籃 end -->
 
     <!-- 會員登入 start -->
     <div id="loginOverlay" class="login-overlay"></div><!-- 會員登入 底下的黑背景 -->
