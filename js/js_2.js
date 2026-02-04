@@ -1,4 +1,5 @@
-/* 商品口味資料（與 data/products.json 同步；若以 file:// 開啟則使用此 fallback） */
+/* 商品口味資料 */
+/* fallback -> 備用資料 讀不到 json 檔時可以用*/
 const PRODUCTS_FALLBACK = {
     productName: "Velocity 超能高蛋白粉 2.5kg",
     price: 1999,
@@ -12,22 +13,21 @@ const PRODUCTS_FALLBACK = {
     ]
 };
 
-let productData = null;
-let cartItems = [];
+let productData = null; // 先宣告一個變數放商品資料，等等把讀到的菜單存起來。
+let cartItems = [];     // 宣告一個空陣列(籃子)，等等裝消費者購買的東西。
 
 
 
 
 
 /* 拖曳函式 */
-
 /* document.addEventListener -> 開啟文件的監聽事件 */
 /* DOMContentLoaded          -> 加載 DOM 後執行 這是事件名稱   */
 /* ()=>{}                    -> 要執行的程式 {} 花括號是為了裝超大一坨執行碼 */
 
 
 document.addEventListener('DOMContentLoaded', ()=>
-    { 
+    {
         // 載入商品資料（優先從 data/products.json 讀取）
         loadProductData();
         
@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', ()=>
 
     /* 購物車 start */
     
-            // 3. 同步當前圖片與商品口味／品項：滾動時更新右側資訊
+        // 同步當前圖片與商品口味／品項：滾動時更新右側資訊
         function getCurrentSlideIndex() {
             const w = slider.clientWidth;
             const scroll = slider.scrollLeft;
@@ -386,6 +386,7 @@ document.addEventListener('DOMContentLoaded', ()=>
             const max = slider.querySelectorAll('.product').length - 1;
             return Math.min(Math.max(0, index), max);
         }
+
         function updateProductInfo() {
             if (!productData) return;
             const index = getCurrentSlideIndex();
@@ -399,10 +400,11 @@ document.addEventListener('DOMContentLoaded', ()=>
             if (priceEl) priceEl.textContent = '$ ' + productData.price;
             if (installEl) installEl.textContent = productData.installment;
         }
+
         slider.addEventListener('scroll', updateProductInfo);
         updateProductInfo();
 
-        // 4. 加入購物車按鈕：打開側邊欄並加入當前品項
+        // 加入購物車按鈕：打開側邊欄並加入當前品項
         const buyBtn2 = document.getElementById('buy-btn2');
         const cartSidebar = document.getElementById('cartSidebar');
         const cartOverlay = document.getElementById('cartOverlay');
@@ -452,10 +454,17 @@ document.addEventListener('DOMContentLoaded', ()=>
     });
 
 function loadProductData() {
-    function applyProductInfo(data) {
-        productData = data;
+    // 負責把資料填入 HTML 的幫手小函式
+    function applyProductInfo(data) { 
+        productData = data; // 把拿到的資料存到全域變數，讓大家都能用。
+        // 抓取上面元素 -> 根據目前滑到哪一張，決定要顯示哪個口味的資訊。
         var slider = document.getElementById('productPreview');
+
+        // 算出現在滑到第幾張圖 ( 算式：捲動距離 / 一張圖寬度 )
         var index = 0;
+        // math.min   -> 取最小值，避免超出範圍
+        // math.max   -> 取最大值，避免小於 0
+        // math.round -> 四捨五入
         if (slider) index = Math.min(Math.max(0, Math.round(slider.scrollLeft / slider.clientWidth)), data.variants.length - 1);
         var v = data.variants[index];
         var flavorEl = document.getElementById('productFlavor');
