@@ -1,0 +1,75 @@
+Mermaid程式碼
+
+( 複製以下 )
+
+erDiagram
+    %% 1. 會員表
+    Members {
+        INT MemberID PK "會員編號 (主鍵)"
+        NVARCHAR Email "電子信箱"
+        NVARCHAR Password "密碼"
+        NVARCHAR Name "姓名"
+        NVARCHAR Address "地址"
+        VARCHAR Phone "電話"
+    }
+
+    %% 2. 商品表
+    Products {
+        INT ProductID PK "商品編號 (主鍵)"
+        NVARCHAR Name "商品名稱"
+        INT Price "價格"
+        INT Stock "庫存"
+        NVARCHAR Description "描述"
+        NVARCHAR ImageURL "圖片路徑"
+        NVARCHAR Flavor "口味"
+    }
+
+    %% 3. 我的最愛
+    Prefer {
+        INT PreferList PK "會員專屬偏好清單 ( 主鍵 )"
+        INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
+        INT ProductID FK "商品編號 ( 外鍵 - Product 主鍵 )"
+    }
+
+    %% 4. 購物車
+    Shoppping {
+        INT CartID PK "購物籃"
+        INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
+        INT ProductID FK "商品編號 ( 外鍵 - Products 主鍵 )"
+        INT Count "商品數量"
+    }
+
+    %% 5. 訂單主表
+    Orders {
+        INT OrderID PK "訂單編號 (主鍵)"
+        INT MemberID FK "會員編號 (外鍵)"
+        DATETIME OrderDate "下單時間"
+        INT TotalAmount "總金額"
+        NVARCHAR Status "訂單狀態"
+    }
+
+    %% 6. 訂單明細表
+    OrderDetails {
+        INT Id PK "流水號 (主鍵)"
+        INT OrderID FK "訂單編號 (外鍵)"
+        INT ProductID FK "商品編號 (外鍵)"
+        INT Quantity "數量"
+        INT UnitPrice "購買單價"
+    }
+
+    %% 7. 寄送地點
+    Transmit {
+        INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
+
+    }
+
+    %% --- 關聯線連連看 ---
+    
+    %% 一個會員可以有很多張訂單 (1 對多)
+    Members ||--o{ Orders : "places (下單)"
+    
+    %% 一張訂單可以有很多個明細 (1 對多)
+    Orders ||--o{ OrderDetails : "contains (包含)"
+    
+    %% 一個商品可以出現在很多個訂單明細裡 (1 對多)
+    Products ||--o{ OrderDetails : "includes (被購買)"
