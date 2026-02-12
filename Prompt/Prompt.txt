@@ -3,7 +3,7 @@ Mermaid程式碼
 ( 複製以下 )
 
 erDiagram
-    %% 1. 會員表
+    %% 1. 會員表（ 緊急程度：5 一定要在報告前生出來 ）
     Members {
         INT MemberID PK "會員編號 (主鍵)"
         NVARCHAR Email "電子信箱"
@@ -13,7 +13,7 @@ erDiagram
         VARCHAR Phone "電話"
     }
 
-    %% 2. 商品表
+    %% 2. 商品表（ 緊急程度：5 一定要在報告前生出來 ）
     Products {
         INT ProductID PK "商品編號 (主鍵)"
         NVARCHAR Name "商品名稱"
@@ -24,14 +24,14 @@ erDiagram
         NVARCHAR Flavor "口味"
     }
 
-    %% 3. 我的最愛
+    %% 3. 我的最愛（ 緊急程度：2 不一定要有，做不完就拿掉。）
     Prefer {
         INT PreferList PK "會員專屬偏好清單 ( 主鍵 )"
         INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
         INT ProductID FK "商品編號 ( 外鍵 - Product 主鍵 )"
     }
 
-    %% 4. 購物車
+    %% 4. 購物車（ 緊急程度：4 ）
     Shoppping {
         INT CartID PK "購物籃"
         INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
@@ -39,37 +39,42 @@ erDiagram
         INT Count "商品數量"
     }
 
-    %% 5. 訂單主表
+    %% 5. 訂單主表（ 緊急程度：4 ）
     Orders {
         INT OrderID PK "訂單編號 (主鍵)"
         INT MemberID FK "會員編號 (外鍵)"
         DATETIME OrderDate "下單時間"
         INT TotalAmount "總金額"
-        NVARCHAR Status "訂單狀態"
+        NVARCHAR Status "付款狀態"
+        NVARCHAR TransmitAddress "地址"
     }
 
-    %% 6. 訂單明細表
+    %% 6. 訂單明細表（ 緊急程度：3 先做完 5、4 再弄 3 ）
     OrderDetails {
-        INT Id PK "流水號 (主鍵)"
+        INT Id PK "流水號 (主鍵 - 店家要看的，不會出現在前端。)"
         INT OrderID FK "訂單編號 (外鍵)"
         INT ProductID FK "商品編號 (外鍵)"
         INT Quantity "數量"
         INT UnitPrice "購買單價"
     }
 
-    %% 7. 寄送地點
-    Transmit {
-        INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
-
-    }
 
     %% --- 關聯線連連看 ---
     
     %% 一個會員可以有很多張訂單 (1 對多)
     Members ||--o{ Orders : "places (下單)"
     
-    %% 一張訂單可以有很多個明細 (1 對多)
+    %% 一張訂單可以有很多個明細 (1 對多) -> 應該是 1 對 1？
     Orders ||--o{ OrderDetails : "contains (包含)"
     
     %% 一個商品可以出現在很多個訂單明細裡 (1 對多)
     Products ||--o{ OrderDetails : "includes (被購買)"
+
+    %% 一個最愛清單可以出現很多個商品
+    Products ||--o{  Prefer : "add Flavor (添加喜愛)"
+
+
+    1. 登入
+    2. 加入購物車 
+    3. 移除購物車 (前端加按鈕)
+    4. 結帳
