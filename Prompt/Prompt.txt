@@ -1,21 +1,21 @@
 Mermaid程式碼
 
-( 複製以下 )
 
 erDiagram
-    %% 1. 會員表（ 緊急程度：5 一定要在報告前生出來 ）
+    %% 1. 會員表 (Members)             ->（ 緊急程度：5 一定要在報告前生出來 ）
     Members {
-        INT MemberID PK "會員編號 (主鍵)"
-        NVARCHAR Email "電子信箱"
+        INT MemberID PK "會員編號"
+        NVARCHAR Email "帳號/信箱"
         NVARCHAR Password "密碼"
         NVARCHAR Name "姓名"
-        NVARCHAR Address "地址"
+        NVARCHAR Address "預設地址"
         VARCHAR Phone "電話"
+        DATETIME CreatedAt "創建時間"
     }
 
-    %% 2. 商品表（ 緊急程度：5 一定要在報告前生出來 ）
+    %% 2. 商品表 (Products)          ->（ 緊急程度：5 一定要在報告前生出來 ）
     Products {
-        INT ProductID PK "商品編號 (主鍵)"
+        INT ProductID PK "商品編號"
         NVARCHAR Name "商品名稱"
         INT Price "價格"
         INT Stock "庫存"
@@ -24,57 +24,78 @@ erDiagram
         NVARCHAR Flavor "口味"
     }
 
-    %% 3. 我的最愛（ 緊急程度：2 不一定要有，做不完就拿掉。）
-    Prefer {
-        INT PreferList PK "會員專屬偏好清單 ( 主鍵 )"
-        INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
-        INT ProductID FK "商品編號 ( 外鍵 - Product 主鍵 )"
+
+    %% 3. 購物車 (Cart) - 中繼站     ->（ 緊急程度：4 ）
+    ShoppingCart {
+        INT CartID PK "流水號"
+        INT MemberID FK "會員編號"
+        DATETIME UpdatedAt "更新時間"
     }
 
-    %% 4. 購物車（ 緊急程度：4 ）
-    Shoppping {
-        INT CartID PK "購物籃"
-        INT MemberID FK "會員編號 ( 外鍵 - Member 主鍵 )"
-        INT ProductID FK "商品編號 ( 外鍵 - Products 主鍵 )"
-        INT Count "商品數量"
+    %% 4. 購物車明細 (CartItems) - （ 緊急程度：4）
+    CartItems {
+        INT CartItemID PK "流水號"
+        INT CartID FK "購物車"
+        INT ProductID FK "商品編號"
+        INT Quantity "數量"
+        DATETIME AddedDate "更新時間"
     }
 
-    %% 5. 訂單主表（ 緊急程度：4 ）
+    %% 5. 訂單主表 (Orders) - （ 緊急程度：4 ）
     Orders {
-        INT OrderID PK "訂單編號 (主鍵)"
-        INT MemberID FK "會員編號 (外鍵)"
+        INT OrderID PK "訂單編號"
+        INT MemberID FK "會員編號"
         DATETIME OrderDate "下單時間"
         INT TotalAmount "總金額"
-        NVARCHAR Status "付款狀態"
-        NVARCHAR TransmitAddress "地址"
+        NVARCHAR Status "狀態"
+        NVARCHAR ShippingAddress "寄送地址"
     }
 
-    %% 6. 訂單明細表（ 緊急程度：3 先做完 5、4 再弄 3 ）
+    %% 6. 訂單明細表 (OrderDetails)                ->（ 緊急程度：3 先做完 5、4 再弄 3 ）
     OrderDetails {
-        INT Id PK "流水號 (主鍵 - 店家要看的，不會出現在前端。)"
-        INT OrderID FK "訂單編號 (外鍵)"
-        INT ProductID FK "商品編號 (外鍵)"
+        INT OrderDetailID PK "流水號"
+        INT OrderID FK "訂單編號"
+        INT ProductID FK "商品編號"
         INT Quantity "數量"
-        INT UnitPrice "購買單價"
+        INT UnitPrice "購買時單價"
     }
 
-
-    %% --- 關聯線連連看 ---
+    %% --- 關聯線 ---
     
-    %% 一個會員可以有很多張訂單 (1 對多)
-    Members ||--o{ Orders : "places (下單)"
+    %% 會員行為
+    Members ||--o{ Orders : "下單"
+    Members ||--o{ ShoppingCart : "加入購物車"
+    Members ||--o{ Wishlist : "收藏"
+
+    %% 訂單結構 (一張訂單有多個明細)
+    Orders ||--o{ OrderDetails : "包含"
     
-    %% 一張訂單可以有很多個明細 (1 對多) -> 應該是 1 對 1？
-    Orders ||--o{ OrderDetails : "contains (包含)"
-    
-    %% 一個商品可以出現在很多個訂單明細裡 (1 對多)
-    Products ||--o{ OrderDetails : "includes (被購買)"
-
-    %% 一個最愛清單可以出現很多個商品
-    Products ||--o{  Prefer : "add Flavor (添加喜愛)"
+    %% 商品關聯
+    Products ||--o{ OrderDetails : "被購買"
+    Products ||--o{ ShoppingCart : "放入車中"
+    Products ||--o{ Wishlist : "被收藏"
 
 
+    0. 註冊
     1. 登入
     2. 加入購物車 
     3. 移除購物車 (前端加按鈕)
     4. 結帳
+
+
+    要檢查的：
+    
+    註冊        -> (O)
+    登入        -> (O)
+    加入購物車   -> ()
+    移除購物車   -> ()
+    結帳        -> ()
+
+    - 記得重新修正 Prompt
+
+    %% 3. 我的最愛 (Wishlist) - 選配 ->（ 緊急程度：2 不一定要有，做不完就拿掉。）
+    Wishlist {
+        INT WishlistID PK "流水號"
+        INT MemberID FK "會員編號"
+        INT ProductID FK "商品編號"
+    }
