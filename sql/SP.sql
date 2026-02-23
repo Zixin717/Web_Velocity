@@ -155,29 +155,44 @@ GO
 
 -- 4. 查看購物車 (usp_GetCartDetails) -> 已執行 2026 / 2 / 17
 --    邏輯：列出車裡所有東西，並算出小計 (單價 x 數量)。
-IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_GetCartDetails')
-    DROP PROCEDURE usp_GetCartDetails;
+USE [Velocity];
 GO
 
-CREATE PROCEDURE usp_GetCartDetails
+-- 4. 升級：查看購物車 (usp_GetCartDetails)
+-- 修改日期：2026/02/24 -> 採用朝弼的 MOMO 風格介面與想法！
+ALTER PROCEDURE usp_GetCartDetails
     @MemberID INT
 AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- 列出明細
+    -- =========================================
+    -- 第一部分：購物車明細清單 (對應 MOMO 每一項商品)
+    -- =========================================
     SELECT 
         P.ProductID,
-        P.Name AS ProductName,
-        P.ImageURL,     -- 前端可能要秀圖片
-        P.Price,        -- 單價
-        CI.Quantity,    -- 數量
-        (P.Price * CI.Quantity) AS SubTotal -- 小計 (單價 x 數量)
+        P.Name AS ProductName,  -- 對應 MOMO 上的：【SAMPO 聲寶】
+        P.ImageURL,             -- 對應 MOMO 上的：商品圖片
+        P.Price AS UnitPrice,   -- 單價
+        CI.Quantity,            -- 對應 MOMO 上的：數量 [ - 1 + ]
+        (P.Price * CI.Quantity) AS SubTotal -- 對應 MOMO 上的：總計 $868
     FROM Cart C
     JOIN CartItems CI ON C.CartID = CI.CartID
     JOIN Products P ON CI.ProductID = P.ProductID
     WHERE C.MemberID = @MemberID
-    ORDER BY CI.AddedDate DESC; -- 最新的放上面
+    ORDER BY CI.AddedDate DESC; -- 最晚加進去的放最上面
+
+    -- =========================================
+    -- 第二部分：購物車「總金額」 (對應 MOMO 準備結帳的總額)
+        -- =========================================
+    -- 這裡用了 ISNULL，如果購物車是空的，總金額就會顯示 0，而不會變成 NULL 報錯
+    SELECT 
+        ISNULL(SUM(P.Price * CI.Quantity), 0) AS TotalCartAmount
+    FROM Cart C
+    JOIN CartItems CI ON C.CartID = CI.CartID
+    JOIN Products P ON CI.ProductID = P.ProductID
+    WHERE C.MemberID = @MemberID;
+
 END;
 GO
 
@@ -340,5 +355,73 @@ BEGIN
     FROM OrderDetails OD
     JOIN Products P ON OD.ProductID = P.ProductID
     WHERE OD.OrderID = @OrderID;
+END;
+GO
+
+USE [Velocity];
+GO
+
+
+-- ============================================================
+-- 8. 清空整個購物車 (usp_ClearCart) -> 明天記得在電腦上執行
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_ClearCart')
+    DROP PROCEDURE usp_ClearCart;
+GO
+
+CREATE PROCEDURE usp_ClearCart
+    @MemberID INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @CartID INT;
+
+    -- 1. 找到這位會員的購物車編號
+    SELECT @CartID = CartID FROM Cart WHERE MemberID = @MemberID;
+
+    -- 2. 把這台購物車裡面的所有商品 (CartItems) 刪除
+    -- 重點：只刪除 CartItems (商品明細)，不刪除 Cart (推車本身)，推車要留著。
+    DELETE FROM CartItems WHERE CartID = @CartID;
+
+    -- 3. 回傳成功訊息給前端
+    SELECT 1 AS Result, N'購物車已全部清空' AS Message;
+END;
+GO
+
+USE [Velocity];
+GO
+
+-- 9. 檢查會員狀態 (usp_CheckMemberStatus)
+-- 邏輯：檢查信箱是否存在，存在就秀出會員資料與「加入天數」，不存在就報錯。
+IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_CheckMemberStatus')
+    DROP PROCEDURE usp_CheckMemberStatus;
+GO
+
+CREATE PROCEDURE usp_CheckMemberStatus
+    @Email NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (SELECT 1 FROM Members WHERE Email = @Email)
+    BEGIN
+        -- 情況 A：帳號存在 -> 回傳 1，並秀出年資
+        SELECT 
+            1 AS Result,
+            MemberID,
+            Name,
+            Email,
+            CreatedAt,
+            DATEDIFF(DAY, CreatedAt, GETDATE()) AS MemberDays, -- 這裡用了朝弼原本的邏輯：計算加入天數！
+            N'帳號存在' AS Message
+        FROM Members
+        WHERE Email = @Email;
+    END
+    ELSE
+    BEGIN
+        -- 情況 B：帳號不存在 -> 回傳 0
+        SELECT 
+            0 AS Result, 
+            N'找不到該帳號：' + @Email AS Message;
+    END
 END;
 GO
