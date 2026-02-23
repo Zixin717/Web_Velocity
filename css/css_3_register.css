@@ -1,0 +1,133 @@
+/* --- 全域設定 --- */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eaeaea; /* 沿用你首頁的灰色背景 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 讓註冊框在整個螢幕垂直置中 */
+}
+
+/* --- 註冊框主體 --- */
+.register-box {
+    width: 450px;
+    background-color: #ffffff;
+    border-radius: 8px; /* 稍微加一點圓角讓視覺更現代 */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+
+.register-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.register-header h2 {
+    margin: 0;
+    color: #ea682c; /* 沿用你按鈕的品牌橘色 */
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.register-header p {
+    color: #636363;
+    margin-top: 10px;
+    font-size: 0.95rem;
+}
+
+/* --- 表單排版 --- */
+.register-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* 輸入框之間的距離 */
+}
+
+/* --- 完美沿用你的浮動標籤特效 --- */
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    width: 100%;
+    box-sizing: border-box; /* 確保 padding 不會撐破寬度 */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    background-color: transparent;
+    padding: 14px 12px;
+    transition: border-color 0.3s;
+}
+
+.input-group label {
+    position: absolute;
+    left: 12px;
+    top: 14px;
+    pointer-events: none;
+    background-color: #ffffff;
+    color: #a8a8a8;
+    padding: 0 5px; /* 給文字一點左右留白，蓋住邊框更漂亮 */
+    transition: all 0.2s ease;
+}
+
+/* 點擊輸入框，或是裡面有字的時候，標籤往上浮動 */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+    top: -10px;
+    left: 8px;
+    font-size: 0.8rem;
+    color: #ea682c; /* 浮動時變成品牌色 */
+}
+
+.input-group input:focus {
+    border-color: #ea682c;
+}
+
+/* --- 註冊按鈕 --- */
+.submit-btn {
+    width: 100%;
+    height: 45px;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    background-color: #248c24; /* 沿用你登入按鈕的綠色 */
+    border: none;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+.submit-btn:hover {
+    background-color: #1f7a1f;
+}
+
+.submit-btn:active {
+    transform: scale(0.98);
+}
+
+/* --- 底部連結 --- */
+.register-footer {
+    margin-top: 25px;
+    font-size: 0.9rem;
+    color: #636363;
+}
+
+.register-footer a {
+    color: #ea682c;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.register-footer a:hover {
+    color: #b5491a;
+}

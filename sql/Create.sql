@@ -1,97 +1,102 @@
--- USE [master];  -- 切換到系統資料庫 -> 避免鎖住
--- GO
+USE [master];  -- 切換到系統資料庫 -> 避免鎖住
+GO
 
--- -- 1. 如果資料庫存在，就把它刪掉 (DROP) -> 已執行 2026 / 2 / 17 （勿動）
--- IF EXISTS (SELECT name FROM sys.databases WHERE name = N'Velocity')
--- BEGIN
---     --這行是用來強制踢掉連線中的人，確保可以刪除
---     ALTER DATABASE [Velocity] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
---     DROP DATABASE [Velocity];
--- END
--- GO
+-- 1. 如果資料庫存在，就把它刪掉 (DROP) -> 已執行 2026 / 2 / 17 （勿動）
+IF EXISTS (SELECT name FROM sys.databases WHERE name = N'Velocity')
+BEGIN
+    --這行是用來強制踢掉連線中的人，確保可以刪除
+    ALTER DATABASE [Velocity] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE [Velocity];
+END
+GO
 
--- -- 2. 重新建立乾淨的資料庫 -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE DATABASE [Velocity];
--- GO
+-- 2. 重新建立乾淨的資料庫 -> 已執行 2026 / 2 / 17 （勿動）
+CREATE DATABASE [Velocity];
+GO
 
 
--- USE [Velocity];
--- GO
+USE [Velocity];
+GO
 
--- -- 1. 會員表 -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE TABLE [Members]
--- (
---     [MemberID] INT PRIMARY KEY IDENTITY(1,1),
---     [Email] NVARCHAR(100) NOT NULL UNIQUE,
---     [Password] NVARCHAR(255) NOT NULL,
---     [Name] NVARCHAR(50) NOT NULL,
---     [Address] NVARCHAR(200),
---     [Phone] VARCHAR(20),
---     [CreatedAt] DATETIME DEFAULT GETDATE() -- 創建時間 -> 備著用
--- );
--- GO
+-- 1. 會員表 -> 已執行 2026 / 2 / 17 （勿動）
+CREATE TABLE [Members]
+(
+    [MemberID] INT PRIMARY KEY IDENTITY(1,1),
+    [Email] NVARCHAR(100) NOT NULL UNIQUE,
+    [Password] NVARCHAR(255) NOT NULL,
+    [Name] NVARCHAR(50) NOT NULL,
+    [Address] NVARCHAR(200),
+    [Phone] VARCHAR(20),
+    [CreatedAt] DATETIME DEFAULT GETDATE() -- 創建時間 -> 備著用
+);
+GO
 
--- -- 2. 商品表 -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE TABLE [Products]
--- (
---     [ProductID] INT PRIMARY KEY IDENTITY(1,1),
---     [Name] NVARCHAR(100) NOT NULL,
---     [Price] INT NOT NULL,
---     [Stock] INT NOT NULL DEFAULT 0,
---     [Description] NVARCHAR(MAX),
---     [ImageURL] NVARCHAR(500),
---     [Flavor] NVARCHAR(50)
--- );
--- GO
+-- 2. 商品表 -> 已執行 2026 / 2 / 17 （勿動）
+CREATE TABLE [Products]
+(
+    [ProductID] INT PRIMARY KEY IDENTITY(1,1),
+    [Name] NVARCHAR(100) NOT NULL,
+    [Price] INT NOT NULL,
+    [Stock] INT NOT NULL DEFAULT 0,
+    [Description] NVARCHAR(MAX),
+    [ImageURL] NVARCHAR(500),
+    [Flavor] NVARCHAR(50)
+);
+GO
 
--- -- 3. 購物車表 (Cart) -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE TABLE Cart
--- (
---     [CartID] INT PRIMARY KEY IDENTITY(1,1),
---     [MemberID] INT NOT NULL UNIQUE,
---     [UpdatedAt] DATETIME DEFAULT GETDATE(),
---     CONSTRAINT FK_Cart_Member FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
--- );
--- GO
+-- 3. 購物車表 (Cart) -> 已執行 2026 / 2 / 17 （勿動）
+CREATE TABLE Cart
+(
+    [CartID] INT PRIMARY KEY IDENTITY(1,1),
+    [MemberID] INT NOT NULL UNIQUE,
+    [UpdatedAt] DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_Cart_Member FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+GO
 
--- -- 4. 購物車明細 (CartItems) -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE TABLE CartItems
--- (
---     [CartItemID] INT PRIMARY KEY IDENTITY(1,1), -- 不確定這一欄的意思？
---     [CartID] INT NOT NULL, -- 連接外鍵
---     [ProductID] INT NOT NULL, -- 商品 ID 能理解
---     [Quantity] INT NOT NULL CHECK (Quantity > 0), -- 數量不能小於零勉強能理解，因為前面拉出購物車了所以這邊有條件。
---     [AddedDate] DATETIME DEFAULT GETDATE(), -- 添加時間 -> 可以讓用戶依照添加時間檢視
---     CONSTRAINT FK_CartItems_Cart FOREIGN KEY (CartID) REFERENCES Cart(CartID), -- FK 能理解
---     CONSTRAINT FK_CartItems_Product FOREIGN KEY (ProductID) REFERENCES Products(ProductID) -- FK 能理解
--- );
--- GO
+-- 4. 購物車明細 (CartItems) -> 已執行 2026 / 2 / 17 （勿動）
+CREATE TABLE CartItems
+(
+    [CartItemID] INT PRIMARY KEY IDENTITY(1,1), -- 不確定這一欄的意思？
+    [CartID] INT NOT NULL, -- 連接外鍵
+    [ProductID] INT NOT NULL, -- 商品 ID 能理解
+    [Quantity] INT NOT NULL CHECK (Quantity > 0), -- 數量不能小於零勉強能理解，因為前面拉出購物車了所以這邊有條件。
+    [AddedDate] DATETIME DEFAULT GETDATE(), -- 添加時間 -> 可以讓用戶依照添加時間檢視
+    CONSTRAINT FK_CartItems_Cart FOREIGN KEY (CartID) REFERENCES Cart(CartID), -- FK 能理解
+    CONSTRAINT FK_CartItems_Product FOREIGN KEY (ProductID) REFERENCES Products(ProductID) -- FK 能理解
+);
+GO
 
--- -- 5. 訂單主表 -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE TABLE [Orders]
--- (
---     [OrderID] INT PRIMARY KEY IDENTITY(1,1),
---     [MemberID] INT NOT NULL,
---     [OrderDate] DATETIME DEFAULT GETDATE(),
---     [TotalAmount] INT NOT NULL,
---     [Status] NVARCHAR(20) DEFAULT N'待付款',
---     [ShippingAddress] NVARCHAR(200) NOT NULL,
---     CONSTRAINT FK_Orders_Member FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
--- );
--- GO
+-- 5. 訂單主表 -> 已執行 2026 / 2 / 17 （勿動）
+CREATE TABLE [Orders]
+(
+    [OrderID] INT PRIMARY KEY IDENTITY(1,1),
+    [MemberID] INT NOT NULL,
+    [OrderDate] DATETIME DEFAULT GETDATE(),
+    [TotalAmount] INT NOT NULL,
+    [Status] NVARCHAR(20) DEFAULT N'待付款',
+    [ShippingAddress] NVARCHAR(200) NOT NULL,
+    CONSTRAINT FK_Orders_Member FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
+);
+GO
 
--- -- 6. 訂單明細表 -> 已執行 2026 / 2 / 17 （勿動）
--- CREATE TABLE [OrderDetails]
--- (
---     [OrderDetailID] INT PRIMARY KEY IDENTITY(1,1),
---     [OrderID] INT NOT NULL,
---     [ProductID] INT NOT NULL,
---     [Quantity] INT NOT NULL,
---     [UnitPrice] INT NOT NULL,
---     CONSTRAINT FK_Details_Order FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
---     CONSTRAINT FK_Details_Product FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
--- );
--- GO
+-- 6. 訂單明細表 -> 已執行 2026 / 2 / 17 （勿動）
+CREATE TABLE [OrderDetails]
+(
+    [OrderDetailID] INT PRIMARY KEY IDENTITY(1,1),
+    [OrderID] INT NOT NULL,
+    [ProductID] INT NOT NULL,
+    [Quantity] INT NOT NULL,
+    [UnitPrice] INT NOT NULL,
+    CONSTRAINT FK_Details_Order FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    CONSTRAINT FK_Details_Product FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+GO
+
+-- 記得把 MEMBER ID 欄位加上去
+
+SELECT * FROM OrderDetails;
+GO
 
 
 

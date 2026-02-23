@@ -66,6 +66,23 @@ html{
     font-weight: bold; /* 鼠標放到<a>標籤時會加粗 */
 }
 
+/*菜單選項 <button> 標籤樣式*/
+#menu li button{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    /*transition: all 0.1s ease;*/
+    font-size: 1rem;
+}
+
+/*菜單選項 <button> 標籤加粗樣式*/
+#menu li button:hover{
+    font-weight: bold; /* 鼠標放到<button>標籤時會加粗 */
+}
+
+
 
 
 /*通過 class 選擇器設置樣式*/
@@ -413,3 +430,226 @@ html{
 .contactCard img:hover {
     transform: scale(1.1);
 }
+
+/* 會員登入 start */
+
+/* 登入 — 遮罩黑幕 */
+.login-overlay{
+    position: fixed;      /* 固定在視窗 */
+    top: 0;               /* 距離視窗頂部 0 */
+    left: 0;              /* 距離視窗左側 0 */
+    width: 100%;          /* 寬度 100% */
+    height: 100%;         /* 高度 100% */
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑色背景 */
+    z-index: 999;         /* 層級在側邊欄下面 */
+
+    /* 預設隱藏 */
+    opacity: 0;          /* 透明度 0 */
+    visibility: hidden;  /* 隱藏 */
+    transition: all 0.3s ease; /* 過渡動畫 */
+}
+
+/* 登入 — 遮罩黑幕 — 事件 */
+.login-overlay.active{
+    opacity: 1;          /* 透明度 1 */
+    visibility: visible; /* 可見 */
+}
+
+/* 登入 */
+.user-login{
+    position: fixed;      /* 固定在視窗 */
+
+    /* 貼著中間 */
+    top: 50%;               /* 放中間 -> 距離視窗頂部 50% */
+    left: 50%;              /* 放中間 -> 距離視窗左側 50% */
+    transform: translate(-50%, -50%); /* 完全置中 */
+
+    width: 500px;           /* 寬度 500px */
+    height: 400px;          /* 高度 400px */
+    background-color: #ffffff;                  /* 白色背景 */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);    /* 陰影效果 */
+    z-index: 1000;        /* 層級在遮罩上面 */
+
+    /* 動畫 — 預設縮小且透明 */
+    opacity: 0;
+    visibility: hidden; /* 這行記得加不然會點到！！終於找到你了 */
+    transform: translate(-50%, -50%) scale(0.8); /*  */
+    transition: all 0.3s ease-in-out;   /* 過渡動畫 */
+
+    /* 排版 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;    /* 置中 */
+}
+
+/* 登入 — active 事件 */
+.user-login.active{
+    opacity: 1;
+    visibility: visible; /* 記得補上開燈 */
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.user-login hr{
+    border: #dcdcdc solid 1px;
+    width: 90%;
+}
+
+/* 登入 — 標題欄樣式 */
+.login-header{
+    width: 100%;
+    /*padding: 20px; /**/
+   /* border-bottom: 1px solid #ddd; /**/
+    display: flex;
+    justify-content: space-between; /* 標題跟關閉鍵兩邊對齊 */
+    align-items: center;
+}
+
+.login-header h2{
+    margin: 30px 0 5px 30px; /* 上 右 下 左 */
+    color: #000000;
+}
+
+.login-header button{
+    margin: 30px 30px 5px 0; /* 上 右 下 左 */
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* 表單樣式 */
+.login-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 30px;
+    gap: 20px;
+}
+
+/* 登入 — 浮動標籤樣式 start */
+.login-group{
+    position: relative; /* 讓 label 可以絕對定位 */
+}
+
+.login-group input{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    background-color: transparent;
+    padding: 12px 10px 12px 10px; /* 上 右 下 左 */
+}
+
+.login-group label{
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    pointer-events: none; /* 讓點擊穿透標籤到 input */
+    background-color: #ffffff; /* 白色背景蓋住 input 背景 */
+    color: #a8a8a8;
+    transition: all 0.2s ease;
+}
+
+/* 點擊輸入框 or 裡面有字( placeholder 未顯示 ) */
+.login-group input:focus + label,
+.login-group input:not(:placeholder-shown) + label{
+    top: -10px; /* 往上移 */
+    left: 5px;  /* 靠左一點 */
+    font-size: 0.8rem; /* 縮小字體 */
+    color: #a8a8a8;  /* 變色 */
+}
+
+/* 點擊時框線變色 */
+.login-group input:focus{
+    border-color: #636363;
+}
+
+
+
+
+
+
+.input-group{
+    position: relative; /* 讓 label 可以絕對定位 */
+}
+
+.input-group input{
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 1rem;
+    background-color: transparent;
+    padding: 12px 10px 12px 10px; /* 上 右 下 左 */
+
+}
+
+.input-group label{
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    pointer-events: none; /* 讓點擊穿透標籤到 input */
+    background-color: #ffffff; /* 白色背景蓋住 input 背景 */
+    color: #a8a8a8;
+    transition: all 0.2s ease;
+}
+
+/* 點擊輸入框 or 裡面有字( placeholder 未顯示 ) */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label{
+    top: -10px; /* 往上移 */
+    left: 5px;  /* 靠左一點 */
+    font-size: 0.8rem; /* 縮小字體 */
+    color: #a8a8a8;  /* 變色 */
+}
+
+/* 點擊時框線變色 */
+.input-group input:focus{
+    border-color: #636363;
+}
+
+
+/* .input-group{
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-top: 30px;
+    gap: 5px;
+} */
+
+/* 登入 — 浮動標籤樣式 end */
+
+/* 登入按鈕 */
+.login-submit-btn{
+    width: 80%;
+    height: 40px;
+    margin: 20px auto 0 auto; /* 上 右 下 左 */
+    font-size: 1rem;
+    background-color: #248c24;
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.login-submit-btn:hover{
+    background-color: #1f7a1f;
+}
+
+.login-submit-btn:active{
+    background-color: #248c24;
+    transform: scale(0.98);
+}
+
+.login-footer{
+    margin-top: 20px;
+    text-align: center;
+}
+
+.login-footer a{
+    text-decoration: none;
+    color: #245f8c;
+}
+
+
+/* 會員登入 end */

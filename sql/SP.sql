@@ -210,13 +210,18 @@ GO
 
 -- ============================================================
 
+
+USE [Velocity];
+GO
+
+
 -- 6. 結帳 (usp_Checkout) -> 交易 + 扣庫存 -> 已執行 2026 / 2 / 17
 --    邏輯：檢查庫存 -> 算總錢 -> 建訂單 -> 搬明細 -> 扣庫存 -> 清空車
 IF EXISTS (SELECT * FROM sys.objects WHERE type = 'P' AND name = 'usp_Checkout')
     DROP PROCEDURE usp_Checkout;
 GO
 
-CREATE PROCEDURE usp_Checkout -- 編輯 2026 / 2 / 18
+CREATE PROCEDURE usp_Checkout -- 編輯 2026 / 2 / 23 -> 回家記得改成 ALTER 重新執行一遍
     @MemberID INT,
     @ShippingAddress NVARCHAR(200)
 AS
@@ -242,10 +247,15 @@ BEGIN
     BEGIN TRY
         -- A. 防超賣檢查 2 -> 再次檢查所有商品庫存
         -- (防止有人放入購物車很久沒結帳，結果被別人買光了)
+
+        -- ==========================================
+        -- ！重要！ 加入老師的 WITH (UPDLOCK)
+        -- ==========================================
         IF EXISTS (
             SELECT 1 
             FROM CartItems CI 
-            JOIN Products P ON CI.ProductID = P.ProductID 
+            JOIN Products P 
+            WITH (UPDLOCK) ON CI.ProductID = P.ProductID -- 在 Products 後面加上 WITH (UPDLOCK)，鎖住這些商品不讓別人同時買。
             WHERE CI.CartID = @CartID AND P.Stock < CI.Quantity
         )
         BEGIN

@@ -40,7 +40,7 @@
                         <li><a href="#page2">品牌介紹</a></li>
                         <li><a href="#">新品快訊</a></li>
                         <li><a href="#page3">熱銷排行</a></li>
-                        <li><a href="#">會員登入</a></li>
+                        <li><button type="button" id="openLoginBtn" class="open-login-btn">會員登入</button></li>
                         <li><a href="#page4">聯絡我們</a></li>
                     <!-- 無序列表 end -->
                     </ul>
@@ -181,7 +181,44 @@
     <!-- 網站頁面 end -->
     </div>
 
+
+    <!-- 會員登入 start -->
+    <div id="loginOverlay" class="login-overlay"></div><!-- 會員登入 底下的黑背景 -->
+
+    <aside id="userLogin" class="user-login">
+        <div class="login-header">
+            <h2>會員登入</h2>
+            <button id="closeLoginBtn" class="close-login-btn">✕</button>
+        </div>
+
+        <hr>
+
+        <div class="login-body">
+            <form id="loginForm" class="login-form">
+                <div class="login-group">
+                    <input type="text" id="username" name="username" placeholder=" " required>
+                    <label for="username">帳號</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder=" " required>
+                    <label for="password">密碼</label>
+                </div>
+                
+                <button type="submit" class="login-submit-btn" id="loginSubmitBtn">登入</button>
+                <p class="login-footer">Join us <a href="Register.html">Register</a></p>
+            </form>
+        </div>
+    <!-- 會員登入 end -->
+    </aside>
+
+
+
+
 <!--網站主體內容 end-->
 </body>
+
+<script src="js/js_1.js"></script>
+
 
 </html>

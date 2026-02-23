@@ -2,7 +2,7 @@ Mermaid程式碼
 
 
 erDiagram
-    %% 1. 會員表 (Members)             ->（ 緊急程度：5 一定要在報告前生出來 ）
+    %% 1. 會員表 (Members)
     Members {
         INT MemberID PK "會員編號"
         NVARCHAR Email "帳號/信箱"
@@ -13,7 +13,7 @@ erDiagram
         DATETIME CreatedAt "創建時間"
     }
 
-    %% 2. 商品表 (Products)          ->（ 緊急程度：5 一定要在報告前生出來 ）
+    %% 2. 商品表 (Products)
     Products {
         INT ProductID PK "商品編號"
         NVARCHAR Name "商品名稱"
@@ -24,15 +24,14 @@ erDiagram
         NVARCHAR Flavor "口味"
     }
 
-
-    %% 3. 購物車 (Cart) - 中繼站     ->（ 緊急程度：4 ）
-    ShoppingCart {
+    %% 3. 購物車 (Cart) - 中繼站
+    Cart {
         INT CartID PK "流水號"
         INT MemberID FK "會員編號"
         DATETIME UpdatedAt "更新時間"
     }
 
-    %% 4. 購物車明細 (CartItems) - （ 緊急程度：4）
+    %% 4. 購物車明細 (CartItems)
     CartItems {
         INT CartItemID PK "流水號"
         INT CartID FK "購物車"
@@ -41,7 +40,7 @@ erDiagram
         DATETIME AddedDate "更新時間"
     }
 
-    %% 5. 訂單主表 (Orders) - （ 緊急程度：4 ）
+    %% 5. 訂單主表 (Orders)
     Orders {
         INT OrderID PK "訂單編號"
         INT MemberID FK "會員編號"
@@ -51,7 +50,7 @@ erDiagram
         NVARCHAR ShippingAddress "寄送地址"
     }
 
-    %% 6. 訂單明細表 (OrderDetails)                ->（ 緊急程度：3 先做完 5、4 再弄 3 ）
+    %% 6. 訂單明細表 (OrderDetails)
     OrderDetails {
         INT OrderDetailID PK "流水號"
         INT OrderID FK "訂單編號"
@@ -64,38 +63,14 @@ erDiagram
     
     %% 會員行為
     Members ||--o{ Orders : "下單"
-    Members ||--o{ ShoppingCart : "加入購物車"
-    Members ||--o{ Wishlist : "收藏"
+    Members ||--|| Cart : "擁有 (1對1)"
 
-    %% 訂單結構 (一張訂單有多個明細)
-    Orders ||--o{ OrderDetails : "包含"
-    
-    %% 商品關聯
+    %% 購物車結構
+    Cart ||--o{ CartItems : "包含 (1對多)"
+    Products ||--o{ CartItems : "放入車中"
+
+    %% 訂單結構 
+    Orders ||--o{ OrderDetails : "包含 (1對多)"
     Products ||--o{ OrderDetails : "被購買"
-    Products ||--o{ ShoppingCart : "放入車中"
-    Products ||--o{ Wishlist : "被收藏"
 
-
-    0. 註冊
-    1. 登入
-    2. 加入購物車 
-    3. 移除購物車 (前端加按鈕)
-    4. 結帳
-
-
-    要檢查的：
     
-    註冊        -> (O)
-    登入        -> (O)
-    加入購物車   -> ()
-    移除購物車   -> ()
-    結帳        -> ()
-
-    - 記得重新修正 Prompt
-
-    %% 3. 我的最愛 (Wishlist) - 選配 ->（ 緊急程度：2 不一定要有，做不完就拿掉。）
-    Wishlist {
-        INT WishlistID PK "流水號"
-        INT MemberID FK "會員編號"
-        INT ProductID FK "商品編號"
-    }
