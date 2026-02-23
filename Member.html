@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity - 會員中心</title>
+    <title>Velocity - 會員中心與購物車</title>
     <style>
-        /* ================= 基礎設定 ================= */
+        /* ================= 基礎設定 (白底、橘黃主色) ================= */
         :root {
-            --primary-color: #00e5ff; /* 活力螢光藍，符合健身科技感 */
-            --bg-dark: #121212;
-            --bg-card: #1e1e1e;
-            --text-light: #f1f1f1;
-            --text-gray: #aaaaaa;
-            --danger: #ff4757;
+            --primary-color: #FF7A00; /* 活力鮮橘色 */
+            --secondary-color: #FFC107; /* 亮眼鮮黃色 */
+            --bg-main: #F8F9FA; /* 乾淨的灰白背景 */
+            --bg-card: #FFFFFF; /* 卡片純白背景 */
+            --text-main: #333333; /* 深灰文字，閱讀舒適 */
+            --text-gray: #777777; /* 輔助用淺灰文字 */
+            --danger: #FF4757; /* 警告/刪除紅色 */
+            --border-color: #EAEAEA; /* 淺色邊框 */
         }
 
         * {
@@ -23,30 +25,33 @@
         }
 
         body {
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-color: var(--bg-main);
+            color: var(--text-main);
             line-height: 1.6;
         }
 
         /* ================= 導覽列 ================= */
         header {
-            background-color: #000;
+            background-color: var(--bg-card);
             padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 2px solid var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         header h1 {
             color: var(--primary-color);
-            font-size: 24px;
+            font-size: 26px;
             letter-spacing: 2px;
-            font-style: italic; /* 營造速度感 */
+            font-style: italic;
+            font-weight: 900;
         }
 
         .nav-links a {
-            color: var(--text-light);
+            color: var(--text-main);
+            font-weight: bold;
             text-decoration: none;
             margin-left: 20px;
             transition: color 0.3s;
@@ -65,13 +70,15 @@
             padding: 0 20px;
         }
 
-        /* 左側選單 */
+        /* ================= 左側選單 ================= */
         .sidebar {
             width: 250px;
             background-color: var(--bg-card);
             border-radius: 10px;
             padding: 20px;
             height: fit-content;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
         }
 
         .sidebar h3 {
@@ -81,30 +88,26 @@
             text-transform: uppercase;
         }
 
-        .sidebar ul {
-            list-style: none;
-        }
-
-        .sidebar li {
-            margin-bottom: 10px;
-        }
+        .sidebar ul { list-style: none; }
+        .sidebar li { margin-bottom: 5px; }
 
         .sidebar a {
-            color: var(--text-light);
+            color: var(--text-main);
             text-decoration: none;
             display: block;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 15px;
+            border-radius: 8px;
             transition: all 0.3s;
+            font-weight: 500;
         }
 
         .sidebar a.active, .sidebar a:hover {
-            background-color: var(--primary-color);
-            color: #000;
+            background-color: #FFF3E0; /* 淺橘色背景 */
+            color: var(--primary-color);
             font-weight: bold;
         }
 
-        /* 右側內容區 */
+        /* ================= 右側內容區 ================= */
         .main-content {
             flex: 1;
         }
@@ -114,60 +117,34 @@
             border-radius: 10px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            border: 1px solid var(--border-color);
         }
 
         .card h2 {
-            border-left: 4px solid var(--primary-color);
+            border-left: 5px solid var(--primary-color);
             padding-left: 15px;
             margin-bottom: 25px;
+            color: var(--text-main);
         }
 
-        /* ================= 會員資料表單 ================= */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: var(--text-gray);
-            margin-bottom: 5px;
-            font-size: 14px;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px 15px;
-            background-color: #2a2a2a;
-            border: 1px solid #333;
-            color: white;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .form-group input:disabled {
-            background-color: #1a1a1a;
-            color: var(--text-gray);
-            cursor: not-allowed;
-        }
-
-        .btn-update {
-            background-color: var(--primary-color);
-            color: #000;
+        /* ================= 按鈕共用設定 ================= */
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #FFF;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 25px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
             font-size: 16px;
-            transition: background 0.3s;
+            transition: opacity 0.3s;
+            box-shadow: 0 4px 10px rgba(255, 122, 0, 0.3);
         }
 
-        .btn-update:hover {
-            background-color: #00b8cc;
-        }
+        .btn-primary:hover { opacity: 0.8; }
 
-        /* ================= 訂單表格 ================= */
+        /* ================= 表格共用設定 ================= */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -177,39 +154,137 @@
         th, td {
             padding: 15px;
             text-align: left;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
         }
 
         th {
             color: var(--text-gray);
-            font-weight: normal;
+            font-weight: 600;
+            background-color: #F8F9FA;
         }
 
-        .status-badge {
+        /* ================= 購物車專屬樣式 ================= */
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-img {
+            width: 60px;
+            height: 60px;
+            background-color: #EEE;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #AAA;
+            font-size: 12px;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            width: fit-content;
+        }
+
+        .qty-btn {
+            background: #F8F9FA;
+            border: none;
             padding: 5px 10px;
+            cursor: pointer;
+            color: var(--text-main);
+        }
+        
+        .qty-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            padding: 5px 0;
+            font-weight: bold;
+        }
+
+        .price-text {
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* 購物車結帳區 */
+        .cart-summary {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed var(--border-color);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        .cart-summary h3 {
+            font-size: 22px;
+        }
+
+        .cart-summary .total-price {
+            color: var(--danger);
+            font-size: 28px;
+            margin-left: 10px;
+        }
+
+        .checkout-bar {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            background-color: #FFF8F0;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #FFE0B2;
+        }
+
+        .checkout-bar input {
+            padding: 10px;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            width: 250px;
+            font-size: 14px;
+        }
+
+        /* ================= 狀態標籤與危險按鈕 ================= */
+        .status-badge {
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: bold;
         }
 
-        .status-pending { background-color: #f39c12; color: #fff; }
-        .status-paid { background-color: #2ecc71; color: #fff; }
-        .status-cancelled { background-color: #7f8c8d; color: #fff; }
+        .status-pending { background-color: #FFF3E0; color: var(--primary-color); border: 1px solid var(--primary-color); }
+        .status-paid { background-color: #E8F5E9; color: #2E7D32; border: 1px solid #2E7D32; }
 
         .btn-cancel {
             background-color: transparent;
             color: var(--danger);
             border: 1px solid var(--danger);
-            padding: 5px 10px;
-            border-radius: 3px;
+            padding: 6px 12px;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s;
+            font-weight: bold;
         }
 
         .btn-cancel:hover {
             background-color: var(--danger);
-            color: #fff;
+            color: #FFF;
         }
+
+        /* ================= 會員表單 ================= */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; color: var(--text-gray); margin-bottom: 8px; font-weight: 500; }
+        .form-group input { width: 100%; padding: 12px; border: 1px solid #CCC; border-radius: 5px; font-size: 16px; }
+        .form-group input:disabled { background-color: #F1F1F1; color: #888; }
     </style>
 </head>
 <body>
@@ -217,9 +292,10 @@
     <header>
         <h1>VELOCITY</h1>
         <div class="nav-links">
-            <a href="index.html">回首頁</a>
-            <a href="#">購物車</a>
-            <a href="#" style="color: var(--primary-color);">會員中心</a>
+            <a href="index.html">首頁</a>
+            <a href="Shopping_Page.html">所有商品</a>
+            <a href="#cart">購物車 <span style="background:var(--danger); color:white; padding: 2px 8px; border-radius: 10px; font-size: 12px;">3</span></a>
+            <a href="#profile" style="color: var(--primary-color);">會員中心</a>
         </div>
     </header>
 
@@ -227,34 +303,75 @@
         <aside class="sidebar">
             <h3>My Account</h3>
             <ul>
-                <li><a href="#profile" class="active">會員資料</a></li>
+                <li><a href="#cart" class="active">我的購物車</a></li>
                 <li><a href="#orders">訂單查詢</a></li>
-                <li><a href="#">專屬優惠券</a></li>
-                <li><a href="#" style="color: var(--danger); margin-top: 20px;">登出</a></li>
+                <li><a href="#profile">會員資料</a></li>
+                <li><a href="#" style="color: var(--danger); margin-top: 20px;">登出系統</a></li>
             </ul>
         </aside>
 
         <main class="main-content">
-            
-            <section id="profile" class="card">
-                <h2>會員資料</h2>
-                <div class="form-group">
-                    <label>電子信箱 (帳號)</label>
-                    <input type="email" value="Reporter@test.com" disabled>
+
+            <section id="cart" class="card">
+                <h2>我的購物車</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>商品明細</th>
+                            <th>單價</th>
+                            <th>數量</th>
+                            <th>小計</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-img">商品圖片</div>
+                                    <span>Velocity 頂級乳清蛋白<br><small style="color:var(--text-gray);">口味：濃郁可可</small></span>
+                                </div>
+                            </td>
+                            <td>$ 1,200</td>
+                            <td>
+                                <div class="qty-box">
+                                    <button class="qty-btn">-</button>
+                                    <input type="text" class="qty-input" value="2" readonly>
+                                    <button class="qty-btn">+</button>
+                                </div>
+                            </td>
+                            <td class="price-text">$ 2,400</td>
+                            <td><button class="btn-cancel">移除</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="product-info">
+                                    <div class="product-img">商品圖片</div>
+                                    <span>Velocity 專業搖搖杯<br><small style="color:var(--text-gray);">顏色：極限黑</small></span>
+                                </div>
+                            </td>
+                            <td>$ 250</td>
+                            <td>
+                                <div class="qty-box">
+                                    <button class="qty-btn">-</button>
+                                    <input type="text" class="qty-input" value="1" readonly>
+                                    <button class="qty-btn">+</button>
+                                </div>
+                            </td>
+                            <td class="price-text">$ 250</td>
+                            <td><button class="btn-cancel">移除</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="cart-summary">
+                    <h3>總結帳金額 <span class="total-price">$ 2,650</span></h3>
+                    <div class="checkout-bar">
+                        <label style="font-weight:bold; color:var(--text-main);">配送地址：</label>
+                        <input type="text" value="台中市西屯區台中歌劇院" placeholder="請輸入收件地址">
+                        <button class="btn-primary">確認結帳</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>姓名</label>
-                    <input type="text" value="Reporter">
-                </div>
-                <div class="form-group">
-                    <label>聯絡電話</label>
-                    <input type="tel" value="0912-345-678">
-                </div>
-                <div class="form-group">
-                    <label>預設寄送地址</label>
-                    <input type="text" value="台中公園">
-                </div>
-                <button class="btn-update">儲存修改</button>
             </section>
 
             <section id="orders" class="card">
@@ -273,28 +390,39 @@
                         <tr>
                             <td>#10025</td>
                             <td>2026-02-23</td>
-                            <td>NT$ 5,998</td>
+                            <td class="price-text" style="font-size: 16px;">$ 2,650</td>
                             <td><span class="status-badge status-pending">待付款</span></td>
                             <td>
-                                <button class="btn-cancel">取消訂單</button>
+                                <a href="#" style="color: var(--primary-color); font-weight:bold; text-decoration: none; margin-right: 10px;">付款去</a>
+                                <button class="btn-cancel" style="padding: 4px 8px; font-size:12px;">取消</button>
                             </td>
                         </tr>
                         <tr>
                             <td>#09882</td>
                             <td>2026-01-15</td>
-                            <td>NT$ 2,999</td>
+                            <td class="price-text" style="font-size: 16px;">$ 1,200</td>
                             <td><span class="status-badge status-paid">已完成</span></td>
-                            <td><a href="#" style="color: var(--primary-color); text-decoration: none;">查看明細</a></td>
-                        </tr>
-                        <tr>
-                            <td>#09850</td>
-                            <td>2026-01-10</td>
-                            <td>NT$ 1,500</td>
-                            <td><span class="status-badge status-cancelled">已取消</span></td>
-                            <td>-</td>
+                            <td><a href="#" style="color: var(--text-gray); text-decoration: underline;">查看明細</a></td>
                         </tr>
                     </tbody>
                 </table>
+            </section>
+
+            <section id="profile" class="card">
+                <h2>會員資料</h2>
+                <div class="form-group">
+                    <label>電子信箱 (帳號)</label>
+                    <input type="email" value="Reporter@test.com" disabled>
+                </div>
+                <div class="form-group">
+                    <label>姓名</label>
+                    <input type="text" value="Reporter">
+                </div>
+                <div class="form-group">
+                    <label>聯絡電話</label>
+                    <input type="tel" value="0912-345-678">
+                </div>
+                <button class="btn-primary">儲存修改</button>
             </section>
 
         </main>

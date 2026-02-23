@@ -641,6 +641,12 @@ html{
     transform: scale(0.98);
 }
 
+.login-submit-btn a{
+    color: #ffffff;
+    text-decoration: none;
+
+}
+
 .login-footer{
     margin-top: 20px;
     text-align: center;
