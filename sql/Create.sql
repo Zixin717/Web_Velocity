@@ -93,8 +93,6 @@ CREATE TABLE [OrderDetails]
 );
 GO
 
--- 記得把 MEMBER ID 欄位加上去
-
 SELECT * FROM OrderDetails;
 GO
 

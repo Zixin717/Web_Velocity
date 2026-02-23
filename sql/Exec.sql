@@ -26,7 +26,7 @@ GO
 
 -- 2. Get 訂單明細：裡面記買了商品 1 號
 SELECT * FROM OrderDetails;
-SELECT * FROM Orders -- WHERE '1'
+SELECT * FROM Orders -- WHERE 
 
 
 -- 3. 購物車清空了：CartItems 應該要是空的 or 這筆被刪掉了
@@ -36,7 +36,22 @@ SELECT * FROM CartItems;
 SELECT * FROM Products;
 
 
+USE [Velocity];
+GO
 
+-- 查出訂單明細，並帶出是誰買的。
+SELECT 
+    OD.OrderDetailID,      -- 明細流水號
+    O.OrderID,             -- 訂單編號
+    M.MemberID AS 會員ID,  -- 我們需要的欄位
+    M.Name AS 會員姓名,     -- 從 Members 表牽過來的名字
+    P.Name AS 商品名稱,     -- 從 Products 表牽過來的商品名
+    OD.Quantity,           -- 數量
+    OD.UnitPrice           -- 單價
+FROM OrderDetails OD
+JOIN Orders O ON OD.OrderID = O.OrderID      -- 牽主表
+JOIN Members M ON O.MemberID = M.MemberID    -- 再透過主表牽起會員
+JOIN Products P ON OD.ProductID = P.ProductID; -- 順便牽起商品
 
 
 
