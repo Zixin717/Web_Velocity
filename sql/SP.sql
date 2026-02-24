@@ -1,6 +1,8 @@
 USE [Velocity];
 GO
 
+
+
 -- =========================================
 
 -- 【SP 1】檢查會員狀態 (usp_CheckMemberStatus)

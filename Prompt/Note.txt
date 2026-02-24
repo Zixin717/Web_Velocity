@@ -1,0 +1,12 @@
+
+1. 資料表、Class -> 大寫
+2. sp、function、資料欄位 -> 小寫
+3. 變數開頭一律小寫 -> @studentID @student_id 擇一
+
+
+%% 3. 我的最愛 (Wishlist) - 選配 ->（ 緊急程度：2 不一定要有，做不完就拿掉。）
+Wishlist {
+    INT WishlistID PK "流水號"
+    INT MemberID FK "會員編號"
+    INT ProductID FK "商品編號"
+}

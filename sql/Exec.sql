@@ -1,53 +1,153 @@
 USE [Velocity];
 GO
 
+-- ===================================================
+-- 步驟一：先將相關連結清空 -> 因為綁 FK 了，先清空明細才能再清空商品。
+-- ===================================================
+DELETE FROM [CartItems];
+DELETE FROM [OrderDetails];
 
-USE [Velocity];
+-- ===================================================
+-- 步驟二：清空商品表
+-- ===================================================
+DELETE FROM [Products];
+
+-- ===================================================
+-- 步驟三：把 ProductID 流水號歸零
+-- ===================================================
+DBCC CHECKIDENT ('Products', RESEED, 0);
 GO
 
+
+-- ===================================================
+-- 步驟四：新增安全寫法 -> 裡面沒東西才能新增
+-- ===================================================
+
+-- 1. 先宣告變數 -> 變數一定用小寫開頭
+-- DECLARE @newFlavor NVARCHAR(100) = N'Velocity 原味高蛋白粉'
+-- IF NOT EXISTS(SELECT 1 FROM Products)
+-- BEGIN
+--     INSERT INTO
+
+
+-- END
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DELETE FROM CartItems;
+DELETE FROM OrderDetails;
+
+-- 現在可以安全清空商品表了
+DELETE FROM Products;
+GO
+
+-- ===================================================
+-- 步驟二：魔法指令 -> 將 ProductID 流水號歸零！
+-- ===================================================
+-- 如果不清零，下一筆商品 ID 會從 16 開始。這行指令會讓它退回起點。
+DBCC CHECKIDENT ('Products', RESEED, 0);
+GO
+
+-- ===================================================
+-- 步驟三：精準上架 5 款商品
 -- 【事前準備】先上架一些 Velocity 高蛋白粉商品
+-- 添加商品測試
+-- ===================================================
 INSERT INTO Products ([Name], [Price], [Stock], [Description], [ImageURL], [Flavor])
 VALUES 
-    (N'Velocity 頂級乳清蛋白', 1200, 50, N'幫助肌肉修復', N'/img/p1.jpg', N'濃郁可可'),
-    (N'Velocity 頂級乳清蛋白', 1200, 30, N'清爽無負擔', N'/img/p2.jpg', N'靜岡抹茶'),
-    (N'Velocity 專業搖搖杯', 250, 100, N'不卡粉設計', N'/img/p3.jpg', N'無');
+    (N'Velocity 原味高蛋白粉', 2999, 10, N'純粹無添加，經典原味', N'/img/p1.jpg', N'原味'),
+    (N'Velocity 草莓高蛋白粉', 2999, 10, N'香甜草莓風味', N'/img/p2.jpg', N'草莓'),
+    (N'Velocity 焦糖咖啡高蛋白粉', 2999, 5, N'提神首選，焦糖拿鐵風味', N'/img/p3.jpg', N'焦糖咖啡'),
+    (N'Velocity 香草高蛋白粉', 1200, 50, N'幫助肌肉修復，濃郁香草', N'/img/p4.jpg', N'香草'),
+    (N'Velocity 抹茶高蛋白粉', 1200, 30, N'清爽無負擔，靜岡抹茶', N'/img/p5.jpg', N'抹茶');
+GO
+
+-- ===================================================
+-- 步驟四：檢查結果
+-- ===================================================
+SELECT * FROM Products;
+
+
+
+
 
 
 -- 報告開場：展示會員系統
--- 1. 檢查帳號是否存在 (工具人功能)
-EXEC usp_CheckMemberStatus @Email = N'nobody@test.com'; -- 預期：回傳找不到帳號
 
--- 2. 註冊會員 1 號
-EXEC usp_CreateMember @Email='Reporter@test.com', @Password='12345', @Name='Reporter', @Address='台中公園';
+
+-- 1. 註冊會員 3 號
+EXEC usp_CreateMember 
+    @Email='Reporter1@test.com',
+    @Password='12345',
+    @Name='Reporter1',
+    @Address='台中公園',
+    @Phone='09123456798';
+
+-- 2. 檢查帳號是否存在
+-- 檢查帳號是否存在 -> 找到帳號版本
+EXEC usp_CheckMemberStatus @Email = N'nobody@test.com'; -- 預期：回傳找不到帳號
+EXEC usp_CheckMemberStatus @Email = N'Reporter1@test.com'; -- 預期：回傳找不到帳號
 
 -- 3. 測試登入機制 (資安展示)
 EXEC usp_LoginMember @Email='Reporter@test.com', @Password='wrong_pwd'; -- 預期：失敗，模糊錯誤訊息
-EXEC usp_LoginMember @Email='Reporter@test.com', @Password='12345';     -- 預期：成功，抓出 CartID
-
+EXEC usp_LoginMember @Email='Reporter1@test.com', @Password='12345';     -- 預期：成功，抓出 CartID
 
 -- 報告中間：展示 MOMO 風格購物車
 -- 4. 會員將商品加入購物車
-EXEC usp_AddToCart @MemberID = 1, @ProductID = 1, @Quantity = 2; -- 可可口味 x2
-EXEC usp_AddToCart @MemberID = 1, @ProductID = 2, @Quantity = 1; -- 抹茶口味 x1
-EXEC usp_AddToCart @MemberID = 1, @ProductID = 3, @Quantity = 1; -- 搖搖杯 x1
+EXEC usp_AddToCart @MemberID = 1, @ProductID = 1, @Quantity = 2; -- 原味 x2 10 - 2
+EXEC usp_AddToCart @MemberID = 1, @ProductID = 2, @Quantity = 1; -- 草莓 x1 10 - 2
+EXEC usp_AddToCart @MemberID = 1, @ProductID = 3, @Quantity = 1; -- 焦糖 x1 5 - 1
+SELECT * FROM Products; -- 還沒買
 
--- 5. 單獨移除一項商品 (反悔不想買搖搖杯了)
-EXEC usp_RemoveFromCart @MemberID = 1, @ProductID = 3;
+
+-- 5. 單獨移除一項商品 (反悔不想買了)
+EXEC usp_RemoveFromCart @MemberID = 1, @ProductID = 3; -- 焦糖
+SELECT 
+    C.CartID AS 推車編號,
+    P.Name AS 商品名稱,
+    P.Price AS 單價,
+    CI.Quantity AS 購買數量,
+    (P.Price * CI.Quantity) AS 小計
+FROM Cart C
+JOIN CartItems CI ON C.CartID = CI.CartID      -- 從推車找到裡面的商品明細
+JOIN Products P ON CI.ProductID = P.ProductID  -- 從明細找到商品的真實名稱與價格
+WHERE C.MemberID = 1;
+
 
 -- 6. 查看 MOMO 風格購物車 (兩個表格：明細清單 + 總結帳金額)
 EXEC usp_GetCartDetails @MemberID = 1;
+SELECT * FROM Products;
 
 
 -- 報告後面：防超賣結帳與訂單連表
--- 7. 執行結帳 (提醒老師這裡我們用了 UPDLOCK 防止超賣)
+-- 7. 執行結帳 ( UPDLOCK 防止超賣)
 EXEC usp_Checkout @MemberID = 1, @ShippingAddress = N'台中歌劇院';
 
--- 8. 確認商品庫存有順利扣除 (可可從 50->48，抹茶從 30->29)
+-- 8. 確認商品庫存有順利扣除
 SELECT * FROM Products;
 
 -- 9. 調出剛剛結帳的 1號訂單 完整明細 (JOIN 關聯展示)
 EXEC usp_GetOrderInvoice @OrderID = 1;
 
+-- 10. 購物車清空
+EXEC usp_ClearCart @MemberID = 1; -- 等測試
 
 -- 報告：營運進階功能
 -- 10. 會員取消訂單 (展示交易退回與庫存回補)
