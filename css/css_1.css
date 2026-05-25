@@ -100,16 +100,39 @@ html{
     flex-direction: row; /*主軸 從左至右*/
     margin-top: 100px;   /* 調整 margin-top 讓網站banner不吃掉下面的空間 */
 
-
-    /*圖片設置*/
-    background-image:url('../img/img_2_8.jpg'); /*..是回到上一資料夾的意思，讓css檔退回去抓img的圖。*/
-    background-size: cover;
-    background-position: 50% 25%;               /* 離左邊50%遠 離上面25%遠 */
-    box-sizing: border-box;                     /* 確保padding不會把圖片撐大 */
+    /*【影片背景關鍵】position: relative 讓子元素的 absolute 定位以這裡為基準*/
+    position: relative;
+    overflow: hidden;    /* 裁掉影片超出邊框的部分，避免跑版 */
 
     /*寬高設置*/
     width: 100%;    /*寬度佔滿*/
     height: 110vh;   /*視窗高度110%*/
+}
+
+/*影片背景本體*/
+/*【關鍵原理】position: absolute 讓影片脫離一般排版流，*/
+/*貼著父元素 #homePage 的四個角落，完全塞滿背景層*/
+#heroBg {
+    position: absolute; /* 絕對定位，相對於父元素 #homePage */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* 等比例裁切，填滿容器，不變形（跟 background-size: cover 一樣的概念）*/
+    z-index: 0;         /* 最底層 */
+}
+
+/*影片上方的半透明遮罩*/
+/*【技巧】用 ::after 偽元素做暗色薄膜，讓白色/橘色文字在影片上更清晰*/
+#homePage::after {
+    content: '';        /* 偽元素必須有 content 才會顯示 */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.35); /* 半透明黑色，0.35 = 35% 透明度，可自己調整 */
+    z-index: 1;         /* 在影片上面，但在文字下面 */
 }
 
 /*首頁文字排版*/
@@ -120,14 +143,15 @@ html{
     align-items: center;    /*讓flex框架內的items置中*/
 
     /* margin 調整邊距 */
-    /* margin: 50% 0% 0% 10%;/*這太邪門了是按照最大父元素推*/
     margin-top: 38vh;       /*上邊距增加螢幕範圍的20％，往下推視窗高度的20%。*/
     margin-left: 25vh;      /*左邊距增加螢幕範圍的10％，往右推視窗高度的10%。*/
 
     /*gap 僅能在flex模式下作用*/
     gap: 10px;
-    border: 0px solid rgb(255, 4, 54); /*給自己確認範圍用，之後記得註解掉這行。*/
 
+    /*【影片背景關鍵】position: relative + z-index: 2 讓文字浮在影片(z:0)和遮罩(z:1)的上面*/
+    position: relative;
+    z-index: 2;
 }
 
 /*homePageText後代選擇器*/
