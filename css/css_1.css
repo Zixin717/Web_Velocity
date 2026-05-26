@@ -1,29 +1,29 @@
 /* 全域設定 */
 html{
-    scroll-behavior: smooth; /* 讓所有錨點跳轉變成平滑滾動 */
-    scroll-padding-top: 107px; /* 數值 = 導覽列高度 60 + 7 + 40 = 107 */
-    font-family: "Noto Sans TC", sans-serif; /* Google 思源黑體 ＆ 預設字體 */
-
+    scroll-behavior: smooth;                 /* 所有錨點跳轉平滑滾動          */
+    scroll-padding-top: 107px;               /* 107 = 導覽列高度 60 + 7 + 40 */
+    font-family: "Noto Sans TC", sans-serif; /* Google 思源黑體 ＆ 預設字體   */
 }
 
 /* Banner */
-/* 為了不要忽大忽小 會寫死這攔的尺寸 */
 /* 60 + 7 + 40 = 107 */
 #banner{
-    display: flex;        /*開啟flex*/
-    flex-direction: column;  /*由上到下*/
-    align-items: center;  /*置中*/
-    justify-content: center;/*置中*/
+    /* flex */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 
-    position: fixed;    /* 讓元素脫離網頁流 固定在最上方 */
-    top: 0;             /* 緊貼視窗最上方*/
-    width: 100%;        /* 因為脫離框架     要重新宣告寬度 */
-    z-index: 999;       /* 最高層級 999    讓它永遠浮在上面*/
+    /* 位置設定 */
+    position: fixed;                 /* 元素脫離網頁 固定在最上方 */
+    z-index: 999;                    /* 最高層級 */
+    top: 0;
+    padding: 7px 0px 0px 0px;        /* 上 右 下 左 */
+    margin: 0px 0px;
 
-    background-color: #ffffff;  /* 要設置背景色不然會變透明 */
-    padding: 7px 0 0px 0;         /* 上 右 下 左 */
-    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的10％。*/
-
+    /* 樣式設定 */
+    width: 100%;
+    background-color: #111111;
 }
 
 #banner img{
@@ -35,9 +35,7 @@ html{
     width: 100%;
 }
 
-
-/*後代選擇器*/
-/*菜單框 樣式*/
+/* 菜單 */
 #menu ul{
 
     margin: 0% 0%;          /*上下左右邊距各為0*/
@@ -49,7 +47,7 @@ html{
     gap: 10%;               /*讓選項有間距*/
     list-style: none;       /*去掉列表的黑點*/
 
-    height: 40px;            /*菜單高度：螢幕的5%*/
+    height: 40px;           /*菜單高度：螢幕的5%*/
 
 }
 
@@ -57,7 +55,7 @@ html{
 /*菜單選項 <a>標籤樣式*/
 #menu li a{
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: #ffffff;
     /*transition: all 0.1s ease;*/
 }
 
@@ -69,7 +67,7 @@ html{
 /*菜單選項 <button> 標籤樣式*/
 #menu li button{
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: #ffffff;
     background: transparent;
     border: none;
     cursor: pointer;
@@ -88,42 +86,49 @@ html{
 /*通過 class 選擇器設置樣式*/
 /*container 網站頁面*/
 .container{
-    background-color: rgb(255, 255, 255); /*網站底色*/
-    margin: 0px 0%;                         /*取消瀏覽器預設樣式，讓上下邊距為0，左右邊距為父元素<body>的0％。*/
+    background-color: #111111; /*網站底色*/
+    margin: 0px 0%;              /*取消瀏覽器預設樣式，讓上下邊距為 0，左右邊距為父元素 <body> 的 0％。*/
 }
 
 
 /*首頁排版*/
 #homePage{
-    /*版面設置*/
-    display: flex;       /*使用flex*/
-    flex-direction: row; /*主軸 從左至右*/
-    margin-top: 100px;   /* 調整 margin-top 讓網站banner不吃掉下面的空間 */
+    /* 版面設置 */
+    display: flex;       /* 使用 flex */
+    flex-direction: row; /* 主軸 從左至右 */
+    margin-top: 100px;   /* 調整 margin-top 讓網站 banner不吃掉下面的空間 */
 
-    /*【影片背景關鍵】position: relative 讓子元素的 absolute 定位以這裡為基準*/
+    /* 影片背景 */
+    /* position: relative 讓子元素的 absolute 定位以這裡為基準 */
     position: relative;
-    overflow: hidden;    /* 裁掉影片超出邊框的部分，避免跑版 */
+    overflow: hidden;    /* 裁掉影片超出邊框的部分，避免跑版。 */
 
-    /*寬高設置*/
-    width: 100%;    /*寬度佔滿*/
-    height: 110vh;   /*視窗高度110%*/
+    /* 寬高設置 */
+    width: 100%;    /* 寬度佔滿 */
+    height: calc(100vh - 107px);
+    /*
+     * calc() 是 CSS 的一個函數，可以在屬性值中進行計算，讓我們可以動態地調整尺寸。
+     * 視窗總高度(100vh) - 導覽列佔掉的高度(107px) = 剩下給首頁的空間
+     * 這樣 margin-top(100px) + height(100vh - 107px) ≈ 100vh，剛好填滿視窗
+     * 107 = Banner 高度：Logo(60) + padding(7) + Menu(40)
+     */
 }
 
-/*影片背景本體*/
-/*【關鍵原理】position: absolute 讓影片脫離一般排版流，*/
-/*貼著父元素 #homePage 的四個角落，完全塞滿背景層*/
+/* 影片背景本體 */
+/* position: absolute 讓影片脫離一般排版 */
+/* 貼著父元素 #homePage 的四個角落，完全塞滿背景層。 */
 #heroBg {
     position: absolute; /* 絕對定位，相對於父元素 #homePage */
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;  /* 等比例裁切，填滿容器，不變形（跟 background-size: cover 一樣的概念）*/
+    object-fit: cover;  /* 等比例裁切填滿容器，不變形。（跟 background-size: cover 一樣）*/
     z-index: 0;         /* 最底層 */
 }
 
-/*影片上方的半透明遮罩*/
-/*【技巧】用 ::after 偽元素做暗色薄膜，讓白色/橘色文字在影片上更清晰*/
+/* 影片上方的半透明遮罩 */
+/* 用 ::after 偽元素做色彩增值 */
 #homePage::after {
     content: '';        /* 偽元素必須有 content 才會顯示 */
     position: absolute;
@@ -132,37 +137,50 @@ html{
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.35); /* 半透明黑色，0.35 = 35% 透明度，可自己調整 */
-    z-index: 1;         /* 在影片上面，但在文字下面 */
+    z-index: 1;                        /* 在影片上面，文字下面。 */
 }
 
 /*首頁文字排版*/
-#homePageText{
-    /* flex 模式*/
-    display: flex;          /*使用flex*/
-    flex-direction: column; /*由上至下排列*/
-    align-items: center;    /*讓flex框架內的items置中*/
+#homePageText {
+    /* 
+     * 原本用 margin-top 推位置（相對定位）
+     * 現在改用 position: absolute，可以精確貼到父元素的任意角落
+     * 前提：父元素 #homePage 已經設了 position: relative ← 上次已經設好了
+     */
+    position: absolute;
+    bottom: 0vh;        /* 距離底部 8% 視窗高度 */
+    left: 5vw;          /* 距離左側 5% 視窗寬度（vw = viewport width） */
 
-    /* margin 調整邊距 */
-    margin-top: 38vh;       /*上邊距增加螢幕範圍的20％，往下推視窗高度的20%。*/
-    margin-left: 25vh;      /*左邊距增加螢幕範圍的10％，往右推視窗高度的10%。*/
+    /* 移除原本用 margin 推位置的方式 */
+    margin-top: 0;
+    margin-left: 0;
 
-    /*gap 僅能在flex模式下作用*/
+    /* Flex 設定不變，但對齊改靠左（不然大字會置中很奇怪） */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;  /* flex-start = 靠主軸起點，這裡是靠左 */
     gap: 10px;
 
-    /*【影片背景關鍵】position: relative + z-index: 2 讓文字浮在影片(z:0)和遮罩(z:1)的上面*/
-    position: relative;
-    z-index: 2;
+    z-index: 2; /* 浮在影片和遮罩上面，這個不能動 */
 }
 
 /*homePageText後代選擇器*/
 /*首頁的<h1>元素*/
-#homePageText h1{
-    margin: 0;                         /*殺掉外邊距 使用gap隔開即可。*/
-    font-family: 'Changa One', Arial;  /*字體樣式： 1.Google的Changa One 2.預設無襯線字體*/
-    font-size: 3rem;                   /*字體大小*/
-    font-weight: 200;                  /*字體粗細：200*/
-    color: rgb(248, 132, 8);       /*字體顏色：*/
-    
+#homePageText h1 {
+    margin: 0;
+    font-family: 'Changa One', Arial;
+
+    /* 
+     * clamp(最小值, 理想值, 最大值) — CSS 響應式字體
+     * 螢幕小時不會小於 3rem，螢幕大時不會超過 10rem
+     * 中間的 9vw = 視窗寬度的 9%，會自動隨螢幕縮放
+     */
+    font-size: clamp(3rem, 9vw, 10rem);
+
+    font-weight: 900;        /* 更粗風格 */
+    color: #ffffff;        /* 改白色，在深色影片上更明顯 */
+    line-height: 1;          /* 行距縮緊，大字才不會間距過大 */
+    letter-spacing: -0.02em; /* 超大字體建議稍微縮字距，視覺更緊實 */
 }
 
 /*首頁的<p>元素*/
@@ -172,20 +190,26 @@ html{
     font-family: Arial, Helvetica, sans-serif;      /*字體樣式*/
     letter-spacing: 0px;                            /*調整字距*/ 
     color: rgb(230, 119, 0);                      /*字體顏色*/
+    opacity: 0;             /* 預設隱藏，等動畫開始 */
+    animation: fadeInUp     /* 使用上面定義的 fadeInUp 劇本 */
+               0.7s          /* 動畫時間 0.7 秒 */
+               ease-out      /* 緩動曲線：快進慢出，比較自然 */
+               0.3s          /* 延遲 0.3 秒後再開始 */
+               forwards;     /* 動畫結束後停在終點，沒有這行會跳回 opacity:0 */
 }
 
 .buy-btn{
     /*1. 讓<a>變成方塊，這樣才能設寬高。*/
-    display: flex;              /*問題一：為啥用flex就能變成方塊？*/
+    display: flex;              
     justify-content: center;    /*文字左右置中*/
     align-items: center;        /*文字垂直置中*/
     margin-top: 1vh;            /*上方外邊距增加螢幕位置的1％*/
 
-    /*2. 漸層背景核心設定*/
+    /* 2. 漸層背景核心設定 */
     /*   放三個顏色：橘 --> 黃 --> 橘 */
     /*   目的：讓背景自己從左滑到右 */
     background-image: linear-gradient(45deg, rgb(249, 162, 0), rgb(225, 220, 100), rgb(249, 162, 0));
-    background-size: 200% auto; /*讓背景變成兩倍大，參照元素是<a>標籤自己。*/
+    background-size: 200% auto; /*讓背景變成兩倍大，參照元素是<a>標籤自己，看要不要再改顏色。*/
     
     /*3. 按鈕基礎外觀*/
     width: 13rem;         /*高度*/
@@ -200,8 +224,12 @@ html{
     /*4. 過渡動畫：針對背景位置做動畫*/
     transition: background-position 0.5s ease, transform 0.2s ease; /* ？真能運行嗎 我也不知道但寫寫看？ */
 
-    /*5. 游標變手手*/
+    /*5. 游標變手*/
     cursor: pointer;
+
+    /* 6. 動畫 */
+    opacity: 0;
+    animation: fadeInUp 0.7s ease-out 0.6s forwards;
 }
 
 /* Hover 效果：移動背景位置 */
@@ -218,7 +246,7 @@ html{
 
 /* Page 2 */
 #page2{
-    background-color: #eaeaea;
+    background-color: #111111;  /*背景色*/
     background-image: url('../img/img_11_2.png'); /*..是回到上一資料夾的意思，讓css檔退回去抓img的圖。*/
     display: flex;          /*啟動flex*/   
     flex-direction: row; /*主軸：從左至右*/
@@ -258,7 +286,7 @@ html{
 
 /* Page 2 <p1>樣式 */
 #page2P1{
-    color: rgb(111, 100, 24);
+    color: rgb(202, 175, 3);
     margin: 0 0 0 0vh;          /*外邊距歸零*/
     text-align: left; /*文字對其左邊*/
     font-family: Arial, Helvetica, sans-serif; /*字體樣式*/
@@ -285,15 +313,28 @@ html{
     /*align-items: center;    /*垂直線置中*/
     padding: 5vh 0% 10vh 0%;       /*上下留白*/
     overflow: hidden;       /*防止整個網頁被撐爆*/
-    background-color: #ffbe08;
+    background-image: url('../img/img_2_11.jpg');
+    background-size: cover;
+    background-position: center;
     font-family: Arial;   /* 字體 */
+    position: relative;
 
+}
+/* 用 ::before 做黑色遮罩（跟首頁用 ::after 一樣的概念） */
+#page3::before {
+    content: '';
+    position: absolute;
+    inset: 0;  /* inset: 0 = top:0; right:0; bottom:0; left:0 的縮寫，貼滿四邊 */
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 0;
 }
 
 /* Page 3 上半部 標題區*/
 .page3-header{
     text-align: center;
     margin-bottom: 30px; /* 跟下面的卡片保持距離 */
+    position: relative;
+    z-index: 1; /* 讓標題區浮在遮罩上面，這個不能動 */
 }
 
 /* New Flavor */
@@ -303,16 +344,17 @@ html{
     color: #ff710b;     /* 顏色 */
 }
 
-/* 標題：開啟味蕾 立即享受*/
+/* <h1> 開啟味蕾 立即享受*/
 .page3-header h1 {
     font-size: 2rem;
     font-weight: 500;
     margin: 0 0;
+    color: #ffffff;
 }
 
 /* <p> 人人都能品嚐Velocity的滋味 */
 .page3-header p { 
-    color: #666;
+    color: rgb(186, 186, 186);
     margin: 0 0;
 }
 
@@ -323,6 +365,8 @@ html{
     gap: 10px;           /* 卡片之間的間距*/
     justify-content: center; /* 物件在水平線上 移動並置中 */
     /*align-items: center;   /* 物件在垂直線上置中 */
+    position: relative;
+    z-index: 1; /* 讓 slider-container 浮在遮罩上面，這個不能動 */
 }
 
 .card{
@@ -330,7 +374,14 @@ html{
     flex-direction: column; /* 由上到下 */
     /*align-items: center;    /* 置中 */
     width: 15%;             /* 寬度佔 slider-container 的 15% */
-    background-color: #ffffff;
+    background: rgba(255, 255, 255, 0.1);
+    /* 霧面效果 */
+    backdrop-filter: blur(12px);            /* 模糊卡片後面的背景 */
+    -webkit-backdrop-filter: blur(12px);    /* Safari 需要加這個前綴，習慣都寫上 */
+    
+    /* 加上半透明邊框，增加玻璃質感 */
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
     padding-bottom: 5vh;
     text-align: left;       /* 文字向左 */
     text-indent: 1rem;       /*文字縮排*/
@@ -343,11 +394,11 @@ html{
 }
 
 .card:hover{
-    background-color: #ff990b;
     color: #ffffff;
     transform: translateY(-10px); /* 滑鼠游標移到該卡片時，上移 10px */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
     cursor: pointer;    /* 游標變手手 */
+    background: rgba(255, 255, 255, 0.25);
 }
 
 .card img{
@@ -408,6 +459,7 @@ html{
     flex-direction: row;
     align-items: center; /* 讓 Logo 跟文字垂直置中 */
     gap: 20px; /* Logo 跟文字的距離 */
+    color: #505050;
 }
 
 /* Logo 大小控制 */
@@ -421,6 +473,7 @@ html{
     line-height: 1.5; /* 讓兩行字不要擠在一起 */
     text-align: left;
     margin: 0; /* 移除多餘邊距 */
+    color: #505050;
 }
 
 /* 右邊：聯絡我們區塊 */
@@ -448,11 +501,13 @@ html{
     height: 30px;
     display: block; /* 消除圖片下方的預設空隙 */
     transition: transform 0.2s; /* 小特效 */
+    filter: brightness(0) invert(1); /* 反轉顏色，讓白色圖示變黑色，黑色圖示變白色 */
 }
 
 /* 小特效：滑鼠移過去會放大 */
 .contactCard img:hover {
     transform: scale(1.1);
+    filter: brightness(0) invert(1) sepia(1) saturate(200%) hue-rotate(5deg); /* 滑過去時加點顏色變化，讓互動更明顯 */
 }
 
 /* 會員登入 start */
@@ -683,3 +738,19 @@ html{
 
 
 /* 會員登入 end */
+
+/* =============================================
+   @keyframes 文字進場動畫定義
+   ============================================= */
+@keyframes fadeInUp {
+    from {
+        /* 動畫起點：透明 + 往下偏移 30px */
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        /* 動畫終點：完全可見 + 回到原位 */
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
